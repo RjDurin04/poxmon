@@ -1,0 +1,100 @@
+
+> void-index@0.1.0 lint
+> eslint
+
+
+C:\Cursor\pokemon\app\berries\firmness\[slug]\page.tsx
+  70:39  warning  'id' is assigned a value but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\berries\flavors\[slug]\page.tsx
+  89:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\encounters\condition-values\[slug]\page.tsx
+  60:63  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  60:77  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Cursor\pokemon\app\evolution\triggers\[slug]\page.tsx
+   3:26  warning  'History' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\items\attributes\[slug]\page.tsx
+   3:26  warning  'Archive' is defined but never used                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  79:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\items\categories\[slug]\page.tsx
+   3:30  warning  'Disc' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  79:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\items\fling-effects\[slug]\page.tsx
+  88:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\languages\[slug]\page.tsx
+  3:28  warning  'Info' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\locations\[slug]\page.tsx
+  175:57  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\locations\areas\[slug]\page.tsx
+   3:10  warning  'Map' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   3:26  warning  'Target' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\locations\pal-park-areas\[slug]\page.tsx
+   3:28  warning  'Target' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   3:36  warning  'Sparkles' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\moves\categories\[slug]\page.tsx
+  3:29  warning  'Target' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\moves\damage-classes\[slug]\page.tsx
+  3:26  warning  'Target' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\moves\learn-methods\[slug]\page.tsx
+  3:31  warning  'Target' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\moves\targets\[slug]\page.tsx
+  3:10  warning  'Move' is defined but never used      @typescript-eslint/no-unused-vars
+  3:35  warning  'Gamepad2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\pokedex\[slug]\page.tsx
+   3:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  81:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\characteristics\[id]\page.tsx
+  67:147  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Cursor\pokemon\app\pokemon\colors\[slug]\page.tsx
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\egg-groups\[slug]\page.tsx
+   3:26  warning  'Users' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  81:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\forms\[slug]\page.tsx
+  50:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\genders\[slug]\page.tsx
+  80:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\growth-rates\[slug]\page.tsx
+  118:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\habitats\[slug]\page.tsx
+  81:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\app\pokemon\pokeathlon-stats\[slug]\page.tsx
+  3:26  warning  'Brain' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Cursor\pokemon\app\pokemon\shapes\[slug]\page.tsx
+  81:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\components\EvolutionChainDisplay.tsx
+  168:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Cursor\pokemon\components\PokemonDetailView.tsx
+  311:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+Γ£û 39 problems (3 errors, 36 warnings)
+
