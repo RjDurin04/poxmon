@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokémon Data Browser
 
-## Getting Started
+A high-fidelity web application for browsing the PokeAPI, built with Next.js 15 and Tailwind CSS v4. This project provides a functional interface for displaying Pokémon data, moves, abilities, and other directory information with a focus on high-performance interactivity and clear data presentation.
 
-First, run the development server:
+## 🌐 Design Principles
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The project implements a professional, data-driven design:
+- **Data-Dense Interface**: High information density focusing on PokeAPI resource attributes.
+- **Technical Typography**: Bold, condensed headers and monospaced data identifiers.
+- **Modern UI Components**: Clean lines, subtle gradients, and glassmorphic textures using Tailwind CSS.
+- **Strict 5-Row Layout**: Directory pages are engineered to maintain exactly **5 rows** of records across all device viewports for a consistent layout.
+- **History-Based Navigation**: Functional "Back" component that utilizes browser history for navigation between listings and detail views.
+
+## 🚀 Functional Features
+
+- **Data Directories**: Functional listings for Moves, Abilities, Types, Items, Berries, Games, Regions, and Locations.
+- **Client-Side Filtering**: Instant search functionality for all directory results.
+- **Resource Details**: Detailed displays for individual Pokémon and other API resources, including statistics and relationships.
+- **Responsive Grid**: Optimized for all device resolutions.
+- **Interactive Transitions**: Staggered entry animations and layout transitions powered by Framer Motion.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **API**: [PokeAPI](https://pokeapi.co/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+
+## 📦 Project Structure
+
+```text
+├── app/                  # Next.js App Router (Pages & Layouts)
+├── components/           # Functional & High-Fidelity UI Components
+│   ├── ui/               # Base Atomic UI Components
+│   └── *Client.tsx       # Interactive Directory Client Engines
+├── lib/                  # Utility functions and API wrappers
+│   ├── api.ts            # PokeAPI Data Fetching Logic
+│   └── utils.ts          # Styles & Class Management
+├── public/               # static assets and fonts
+└── tailwind.config.ts    # Custom Design Tokens & Tokens
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 20.x or higher
+- npm / pnpm / yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/RjDurin04/poxmon.git
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Access the registry at `http://localhost:3000`.
 
-## Learn More
+## 📜 License
+Internal Project - All Rights Reserved.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built for the Pokémon Technical Registry Project.*
