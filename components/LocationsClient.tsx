@@ -69,7 +69,7 @@ export function LocationsClient({ regionList, initialLocations }: LocationsClien
                             <MapPin className="w-5 h-5 text-white" />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent leading-none mb-1">Database Atlas</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent leading-none mb-1">Location Registry</span>
                             <span className="text-xs font-black text-text-muted uppercase tracking-widest">PokeAPI v2</span>
                         </div>
                     </motion.div>

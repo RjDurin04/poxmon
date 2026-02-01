@@ -18,6 +18,11 @@ export default async function ItemCategoryDetailPage({ params }: PageProps) {
                 <div className="absolute -top-24 -left-24 w-96 h-96 blur-[120px] rounded-full opacity-10 bg-accent" />
 
                 <div className="relative max-w-7xl mx-auto">
+                    {/* Decorative Background Label */}
+                    <span className="text-[5rem] sm:text-[8rem] lg:text-[14rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] uppercase">
+                        CATEGORY
+                    </span>
+
                     <Link
                         href="/items"
                         className="inline-flex items-center gap-2 text-accent hover:text-accent-hover transition-colors mb-8 group"

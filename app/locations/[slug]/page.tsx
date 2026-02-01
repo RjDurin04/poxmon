@@ -10,8 +10,18 @@ import {
     Search,
     Map as MapIcon,
     Layers,
-    Globe
+    Globe,
+    Binary,
+    Database,
+    Hash,
+    Scan,
+    BarChart3,
+    Activity,
+    Radar
 } from "lucide-react";
+import { GenericPokemonCarousel } from "@/components/GenericPokemonCarousel";
+import { BackButton } from "@/components/BackButton";
+import { cn } from "@/lib/utils";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -23,205 +33,312 @@ export default async function LocationDetailPage({ params, searchParams }: PageP
     const { area: selectedAreaName } = await searchParams;
     const location = await getLocationDetail(slug);
 
-    // Fetch detailed area data for the selected area or the first one
+    // Fetch detailed area data
     const activeAreaName = selectedAreaName || (location.areas.length > 0 ? location.areas[0].name : null);
     const mainArea = activeAreaName ? await getLocationArea(activeAreaName) : null;
 
     const englishName = location.names.find(n => n.language.name === "en")?.name || location.name;
 
     return (
-        <div className="min-h-screen bg-bg-primary pb-20">
-            {/* Immersive Header */}
-            <div className="relative overflow-hidden pt-24 pb-20 px-4 md:px-8 border-b border-border">
-                <div className="absolute -top-24 -left-24 w-96 h-96 blur-[120px] rounded-full opacity-10 bg-accent" />
-
-                <div className="max-w-7xl mx-auto relative px-4 md:px-0">
-                    {location.region && (
-                        <Link
-                            href={`/regions/${location.region.name}`}
-                            className="group flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors mb-12"
-                        >
-                            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                            <span className="font-black uppercase tracking-widest text-[10px]">Back to {location.region.name} Region</span>
-                        </Link>
-                    )}
-
-                    <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
-                        <div>
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 rounded-xl bg-accent text-white">
-                                    <MapPin className="w-5 h-5" />
-                                </div>
-                                <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-border bg-bg-secondary text-text-primary">
-                                    POI - {location.id}
-                                </span>
-                            </div>
-                            <h1 className="text-6xl md:text-9xl font-black text-text-primary capitalize tracking-tighter mb-6">
-                                {englishName}
-                            </h1>
-                            <div className="flex flex-wrap gap-4">
-                                {location.region && (
-                                    <Link
-                                        href={`/regions/${location.region.name}`}
-                                        className="flex items-center gap-2 px-4 py-2 bg-bg-secondary border border-border rounded-xl hover:bg-bg-tertiary transition-colors"
-                                    >
-                                        <Globe className="w-4 h-4 text-accent" />
-                                        <span className="text-xs font-black text-text-primary uppercase tracking-tight">{location.region.name}</span>
-                                    </Link>
-                                )}
-                                <div className="flex items-center gap-2 px-4 py-2 bg-bg-secondary border border-border rounded-xl">
-                                    <Layers className="w-4 h-4 text-accent" />
-                                    <span className="text-xs font-black text-text-primary uppercase tracking-tight">{location.areas.length} Distinct Areas</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="hidden lg:block bg-bg-secondary/40 backdrop-blur-xl p-8 rounded-[32px] border border-border shadow-2xl max-w-sm">
-                            <div className="flex items-center gap-3 mb-4">
-                                <Compass className="w-4 h-4 text-accent" />
-                                <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Survey Status</span>
-                            </div>
-                            <p className="text-sm text-text-secondary font-medium italic">
-                                &quot;Geographic surveys of {englishName} show a diverse ecological structure with {location.areas.length} registered sub-areas.&quot;
-                            </p>
-                        </div>
-                    </div>
-                </div>
+        <div className="min-h-screen bg-bg-primary text-text-primary selection:bg-accent/30 selection:text-white overflow-x-hidden relative">
+            {/* Background Atmosphere */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[10%] left-[20%] w-[60%] h-[60%] bg-accent/5 blur-[120px] rounded-full opacity-30" />
+                <div className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-accent/5 blur-[120px] rounded-full opacity-20" />
             </div>
 
-            {/* Content Geography */}
-            <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Navigation */}
+            <div className="fixed top-28 left-6 sm:left-12 z-[110]">
+                <BackButton variant="floating" label="Registry" fallbackPath="/locations" />
+            </div>
 
-                    {/* Left Column: Sub-Areas */}
-                    <div className="lg:col-span-1 space-y-8">
-                        <div className="bg-bg-secondary rounded-[32px] p-8 border border-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-10">
-                                <Navigation className="w-5 h-5 text-accent" />
-                                <h2 className="text-xs font-black uppercase tracking-widest text-text-primary">Regional Sub-Areas</h2>
+            {/* Header: Sector Identification */}
+            <header className="relative z-20 pt-32 sm:pt-48 pb-12 sm:pb-24 px-4 sm:px-8 max-w-7xl mx-auto">
+                <div className="relative flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+                    {/* Background Label */}
+                    <span className="text-[5rem] sm:text-[8rem] lg:text-[14rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] uppercase">
+                        LOCATION
+                    </span>
+
+                    <div className="flex items-center gap-4 mb-6 flex-wrap justify-center lg:justify-start">
+                        <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_currentColor]" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">
+                            Geospatial Registry Module
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_currentColor]" />
+                    </div>
+
+                    <h1 className="text-6xl sm:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.8] mb-8 drop-shadow-2xl text-text-primary">
+                        {englishName}
+                    </h1>
+
+                    <div className="flex flex-wrap gap-4 items-center justify-center lg:justify-start">
+                        <span className="px-6 py-2.5 rounded-2xl bg-bg-secondary border border-border/50 text-xs font-black uppercase tracking-widest text-text-primary flex items-center gap-2">
+                            <Hash className="w-3.5 h-3.5 text-accent" />
+                            POI INDEX: {location.id.toString().padStart(4, '0')}
+                        </span>
+
+                        {location.region && (
+                            <Link
+                                href={`/regions/${location.region.name}`}
+                                className="px-6 py-2.5 rounded-2xl bg-accent/10 border border-accent/20 text-xs font-black uppercase tracking-widest text-accent flex items-center gap-2 hover:bg-accent/20 transition-colors"
+                            >
+                                <Globe className="w-3.5 h-3.5" />
+                                JURISDICTION: {location.region.name}
+                            </Link>
+                        )}
+
+                        <span className="px-6 py-2.5 rounded-2xl bg-bg-secondary border border-border/50 text-xs font-black uppercase tracking-widest text-text-muted flex items-center gap-2">
+                            <Layers className="w-3.5 h-3.5" />
+                            {location.areas.length} SECTORS
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            {/* Main Content Grid */}
+            <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pb-32 space-y-16">
+
+                <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* 1. Territorial Sub-sectors (Left Column) */}
+                    <div className="lg:col-span-4 space-y-8">
+                        <div className="p-8 rounded-[2.5rem] bg-bg-secondary/40 backdrop-blur-md border border-border/50 relative overflow-hidden group">
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="p-2.5 rounded-xl bg-accent/10 border border-accent/20">
+                                    <Radar className="w-5 h-5 text-accent" />
+                                </div>
+                                <h2 className="text-xs font-black uppercase tracking-[0.2em] text-text-primary">Territorial Sectors</h2>
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                                 {location.areas.map((area) => (
                                     <Link
                                         key={area.name}
                                         href={`?area=${area.name}`}
-                                        className={`p-5 border rounded-2xl block transition-all group ${activeAreaName === area.name
-                                                ? "bg-accent/10 border-accent/40 shadow-sm shadow-accent/10"
-                                                : "bg-bg-tertiary border-border hover:border-accent/40"
-                                            }`}
+                                        className={cn(
+                                            "flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 group/item",
+                                            activeAreaName === area.name
+                                                ? "bg-accent/10 border-accent/30"
+                                                : "bg-bg-tertiary/40 border-transparent hover:border-accent/20 hover:bg-bg-tertiary/60"
+                                        )}
                                     >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md ${activeAreaName === area.name ? "bg-accent text-white" : "bg-accent/5 text-accent"
-                                                }`}>
-                                                {activeAreaName === area.name ? "Active" : "Surveyed"}
+                                        <div className="flex flex-col">
+                                            <span className={cn(
+                                                "text-[9px] font-black uppercase tracking-widest mb-1",
+                                                activeAreaName === area.name ? "text-accent" : "text-text-muted"
+                                            )}>
+                                                {activeAreaName === area.name ? "ACTIVE SCAN" : "REGISTERED"}
                                             </span>
-                                            <MoveUpRight className={`w-4 h-4 transition-colors ${activeAreaName === area.name ? "text-accent" : "text-text-muted group-hover:text-accent"
-                                                }`} />
+                                            <span className={cn(
+                                                "text-sm font-black uppercase tracking-tight capitalize",
+                                                activeAreaName === area.name ? "text-text-primary" : "text-text-secondary"
+                                            )}>
+                                                {area.name.replace(/-/g, " ")}
+                                            </span>
                                         </div>
-                                        <span className={`text-lg font-black capitalize tracking-tight leading-none block transition-colors ${activeAreaName === area.name ? "text-accent" : "text-text-primary group-hover:text-accent"
-                                            }`}>
-                                            {area.name.replace(/-/g, " ")}
-                                        </span>
+                                        <div className={cn(
+                                            "w-8 h-8 rounded-full flex items-center justify-center transition-all",
+                                            activeAreaName === area.name ? "bg-accent text-white scale-110 shadow-lg shadow-accent/20" : "bg-bg-secondary text-text-muted group-hover/item:text-accent"
+                                        )}>
+                                            <Scan className="w-4 h-4" />
+                                        </div>
                                     </Link>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Survey Metadata */}
-                        <div className="bg-bg-secondary rounded-[32px] p-8 border border-border shadow-sm">
+                        {/* Survey Archive Log */}
+                        <div className="p-8 rounded-[2.5rem] bg-bg-secondary/20 border border-border/50">
                             <div className="flex items-center gap-3 mb-8">
-                                <History className="w-4 h-4 text-accent" />
-                                <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Survey Log</h2>
+                                <History className="w-5 h-5 text-text-muted" />
+                                <h2 className="text-xs font-black uppercase tracking-[0.2em] text-text-primary">Registry History</h2>
                             </div>
                             <div className="space-y-4">
                                 {location.game_indices.map((idx, i) => (
-                                    <div key={i} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                                        <span className="text-[10px] font-black text-text-muted uppercase">{idx.generation.name.replace(/-/g, " ")}</span>
-                                        <span className="text-xs font-black text-text-primary font-mono tracking-tighter">REF-{idx.game_index.toString().padStart(4, '0')}</span>
+                                    <div key={i} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
+                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-wider">{idx.generation.name.replace(/-/g, " ")}</span>
+                                        <span className="text-xs font-black text-text-primary font-mono tracking-tighter">ID-{idx.game_index.toString().padStart(4, '0')}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
 
-                    {/* Main Content: Encounter Data */}
-                    <div className="lg:col-span-2 space-y-12">
+                    {/* 2. Ecological Audit (Right Column) */}
+                    <div className="lg:col-span-8 space-y-8">
                         {mainArea ? (
-                            <div className="space-y-12">
-                                {/* Sample Encounters */}
-                                <div>
-                                    <div className="flex items-center gap-4 mb-8">
-                                        <div className="p-3 rounded-2xl bg-bg-secondary border border-border">
-                                            <Search className="w-6 h-6 text-accent" />
-                                        </div>
+                            <div className="space-y-8">
+                                {/* Area Summary / Scan HUD */}
+                                <div className="p-8 sm:p-12 rounded-[3rem] bg-bg-secondary/30 border border-border/50 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-12 opacity-5">
+                                        <MapIcon className="w-48 h-48 -rotate-12" />
+                                    </div>
+
+                                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-8 mb-12">
                                         <div>
-                                            <h2 className="text-sm font-black uppercase tracking-[0.2em] text-text-muted leading-tight">Biological Audit</h2>
-                                            <h3 className="text-3xl font-black text-text-primary tracking-tighter">
-                                                Species in {mainArea.name.replace(/-/g, " ")}
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                                                <span className="text-xs font-bold text-accent uppercase tracking-[0.3em]">Sector Audit: {mainArea.name.replace(/-/g, " ")}</span>
+                                            </div>
+                                            <h3 className="text-4xl sm:text-6xl font-black text-text-primary uppercase tracking-tighter leading-none">
+                                                Ecological <span className="text-text-muted">Audit</span>
                                             </h3>
                                         </div>
+                                        <div className="flex gap-6 px-8 py-6 rounded-3xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                                            <div className="text-center">
+                                                <div className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Density</div>
+                                                <div className="text-2xl font-black text-text-primary">{mainArea.pokemon_encounters.length}</div>
+                                            </div>
+                                            <div className="w-px h-10 bg-white/5" />
+                                            <div className="text-center">
+                                                <div className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Sector ID</div>
+                                                <div className="text-2xl font-black text-text-primary">#{mainArea.id}</div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {mainArea.pokemon_encounters.slice(0, 12).map((enc) => (
-                                            <Link
-                                                key={enc.pokemon.name}
-                                                href={`/pokemon/${enc.pokemon.name}`}
-                                                className="group p-6 bg-bg-secondary border border-border rounded-[28px] hover:border-accent/40 hover:bg-bg-tertiary transition-all flex items-center justify-between"
-                                            >
-                                                <div className="flex items-center gap-5">
-                                                    <div className="w-16 h-16 rounded-2xl bg-bg-tertiary border border-border flex items-center justify-center p-2 group-hover:scale-110 transition-transform relative overflow-hidden">
-                                                        <img
-                                                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${enc.pokemon.url.split("/").filter(Boolean).pop()}.png`}
-                                                            alt={enc.pokemon.name}
-                                                            className="w-12 h-12 object-contain relative z-10"
-                                                            loading="lazy"
-                                                            onError={(e) => {
-                                                                (e.target as HTMLImageElement).src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${enc.pokemon.url.split("/").filter(Boolean).pop()}.png`;
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h4 className="text-xl font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors">
-                                                            {enc.pokemon.name}
-                                                        </h4>
-                                                        <div className="flex gap-2 mt-1">
-                                                            {enc.version_details[0].encounter_details.slice(0, 1).map((detail, idx) => (
-                                                                <span key={idx} className="text-[10px] font-black text-text-muted uppercase tracking-widest bg-bg-primary px-2 py-0.5 rounded border border-border">
-                                                                    {detail.method.name.replace(/-/g, " ")}
-                                                                </span>
-                                                            ))}
+                                    {/* Surveyed Entities Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {mainArea.pokemon_encounters.map((enc) => {
+                                            const pokemonId = enc.pokemon.url.split("/").filter(Boolean).pop();
+                                            return (
+                                                <Link
+                                                    key={enc.pokemon.name}
+                                                    href={`/pokemon/${enc.pokemon.name}`}
+                                                    className="group flex items-center justify-between p-5 bg-bg-tertiary/20 border border-border/40 rounded-3xl hover:border-accent/40 hover:bg-bg-tertiary/40 transition-all duration-300"
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-16 h-16 rounded-2xl bg-bg-secondary border border-border flex items-center justify-center p-2 group-hover:scale-110 transition-transform">
+                                                            <img
+                                                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}
+                                                                alt={enc.pokemon.name}
+                                                                className="w-12 h-12 object-contain grayscale group-hover:grayscale-0 transition-all"
+                                                                loading="lazy"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-lg font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors">
+                                                                {enc.pokemon.name}
+                                                            </h4>
+                                                            <div className="flex gap-1.5 mt-1">
+                                                                {enc.version_details[0].encounter_details.slice(0, 1).map((detail, idx) => (
+                                                                    <span key={idx} className="text-[9px] font-black text-text-muted uppercase tracking-[0.2em] bg-bg-secondary/50 px-2 py-0.5 rounded border border-white/5">
+                                                                        {detail.method.name.replace(/-/g, " ")}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="text-right">
-                                                    <div className="text-sm font-black text-text-primary font-mono">{enc.version_details[0].encounter_details[0].chance}%</div>
-                                                    <div className="text-[8px] font-black text-text-muted uppercase tracking-tighter">Occurrence</div>
-                                                </div>
-                                            </Link>
-                                        ))}
+                                                    <div className="text-right">
+                                                        <div className="text-sm font-black text-text-primary font-mono">{enc.version_details[0].encounter_details[0].chance}%</div>
+                                                        <div className="text-[8px] font-black text-text-muted uppercase tracking-tighter">Probability</div>
+                                                    </div>
+                                                </Link>
+                                            );
+                                        })}
                                     </div>
 
-                                    {mainArea.pokemon_encounters.length > 12 && (
-                                        <div className="mt-8 text-center">
-                                            <span className="text-xs font-black text-text-muted uppercase tracking-widest">+ {mainArea.pokemon_encounters.length - 12} additional species documented</span>
+                                    {mainArea.pokemon_encounters.length === 0 && (
+                                        <div className="p-16 border border-dashed border-border/50 rounded-3xl flex flex-col items-center justify-center text-center opacity-50">
+                                            <Search className="w-12 h-12 text-text-muted mb-4" />
+                                            <p className="text-xs font-black uppercase tracking-widest">No organisms detected in scan</p>
                                         </div>
                                     )}
                                 </div>
+
+                                {/* Area Method Analysis */}
+                                {mainArea.encounter_method_rates.length > 0 && (
+                                    <div className="p-8 rounded-[3rem] bg-bg-secondary/20 border border-border/50">
+                                        <div className="flex items-center gap-4 mb-10">
+                                            <BarChart3 className="w-5 h-5 text-text-muted" />
+                                            <h2 className="text-xs font-black uppercase tracking-[0.4em]">Methodology Acquisition</h2>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                            {mainArea.encounter_method_rates.map((method, idx) => (
+                                                <div key={idx} className="space-y-4">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-xs font-black text-text-primary uppercase tracking-tight">{method.encounter_method.name.replace(/-/g, " ")}</span>
+                                                        <span className="text-[10px] font-mono text-text-muted">PROC-{idx}</span>
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        {method.version_details.map((v, i) => (
+                                                            <div key={i} className="flex items-center justify-between text-[10px]">
+                                                                <span className="text-text-muted uppercase font-bold">{v.version.name}</span>
+                                                                <span className="text-text-primary font-black uppercase tracking-tighter">RATE: {v.rate}%</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ) : (
-                            <div className="p-12 rounded-[40px] border border-border border-dashed flex flex-col items-center justify-center text-center">
-                                <MapIcon className="w-12 h-12 text-text-muted mb-4 opacity-20" />
-                                <h3 className="text-xl font-black text-text-muted uppercase tracking-tighter">No Biological Data</h3>
-                                <p className="text-sm text-text-muted italic max-w-xs mt-2">
-                                    No ecological surveys have been registered for this specific territorial domain.
+                            <div className="p-24 rounded-[3rem] border border-border border-dashed flex flex-col items-center justify-center text-center opacity-30">
+                                <Binoculars className="w-12 h-12 text-text-muted mb-4" />
+                                <h3 className="text-xl font-black uppercase tracking-tighter">Sector Offline</h3>
+                                <p className="text-xs font-bold uppercase tracking-widest mt-2 max-w-xs">
+                                    No ecological survey documentation found for this sector.
                                 </p>
                             </div>
                         )}
                     </div>
-                </div>
-            </div>
+                </section>
+
+                {/* Regional Context Deployment */}
+                {location.region && (
+                    <section className="pt-12">
+                        <div className="flex flex-col items-center text-center mb-16">
+                            <div className="w-12 h-12 rounded-2xl bg-accent/5 flex items-center justify-center border border-accent/10 mb-6 group">
+                                <Navigation className="w-6 h-6 text-accent group-hover:translate-y-[-2px] transition-transform" />
+                            </div>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-text-muted">Jurisdiction Context</h2>
+                            <p className="mt-4 text-3xl font-black text-text-primary uppercase tracking-tight">
+                                Other Locations in <span className="text-accent">{location.region.name}</span>
+                            </p>
+                        </div>
+
+                        <div className="p-1 rounded-[3.5rem] bg-gradient-to-b from-accent/10 to-transparent">
+                            <div className="bg-bg-secondary/40 backdrop-blur-xl rounded-[3rem] p-8 md:p-12 border border-border/50">
+                                <div className="text-center py-12">
+                                    <Link
+                                        href={`/regions/${location.region.name}`}
+                                        className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/25"
+                                    >
+                                        <Globe className="w-5 h-5" />
+                                        Access Region Registry
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+            </main>
         </div>
     );
+}
+
+// Icon helper
+function Binoculars(props: any) {
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M8 22a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8Z" />
+            <path d="M15 22a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h1Z" />
+            <path d="M5 8V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4" />
+            <path d="M12 20v2" />
+        </svg>
+    )
 }

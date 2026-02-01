@@ -12,7 +12,8 @@ import {
     Activity,
     Layers,
     Filter,
-    Flame
+    Flame,
+    LucideIcon
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -81,8 +82,11 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
     }, [filteredTypes, currentPage, itemsPerPage]);
 
     useEffect(() => {
-        setCurrentPage(1);
-    }, [searchQuery]);
+        if (currentPage !== 1) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setCurrentPage(1);
+        }
+    }, [searchQuery, currentPage]);
 
     const containerVariants = {
         visible: {
@@ -94,13 +98,11 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
 
     return (
         <div className="min-h-screen bg-bg-primary text-text-primary selection:bg-accent/30 selection:text-white pb-20 font-sans">
-            {/* Ambient Background */}
             <div className="fixed inset-0 pointer-events-none z-0">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-accent-rgb)_0.5px,_transparent_0.5px)] bg-[size:48px_48px] opacity-[0.03]" />
                 <div className="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-accent/5 blur-[120px] rounded-full" />
             </div>
 
-            {/* Elemental Header */}
             <header className="relative z-10 pt-32 sm:pt-44 lg:pt-52 pb-16 px-4 md:px-8 border-b border-border/50 bg-bg-primary/50 backdrop-blur-xl">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
@@ -138,7 +140,6 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
                             </motion.p>
                         </div>
 
-                        {/* Stats & Search */}
                         <div className="flex flex-col gap-6 w-full lg:w-auto">
                             <div className="flex items-center gap-6">
                                 <DashboardStat label="Total Types" value={totalCount} icon={Database} />
@@ -160,7 +161,6 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
                 </div>
             </header>
 
-            {/* Types Grid */}
             <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-20">
                 <AnimatePresence mode="wait">
                     <motion.div
@@ -190,7 +190,6 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
                     </motion.div>
                 )}
 
-                {/* Pagination Controls */}
                 {totalPages > 1 && (
                     <div className="mt-20 flex flex-col sm:flex-row items-center justify-between gap-8 border-t border-border/50 pt-12">
                         <div className="flex items-center gap-4">
@@ -249,7 +248,7 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
     );
 }
 
-function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: any, color?: string }) {
+function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: LucideIcon, color?: string }) {
     return (
         <div className="bg-bg-secondary/40 border border-border px-8 py-5 rounded-3xl backdrop-blur-md flex-1 lg:flex-none">
             <div className="flex items-center gap-3 mb-1.5">
@@ -261,7 +260,7 @@ function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }
     );
 }
 
-function PaginationButton({ onClick, disabled, icon: Icon }: { onClick: () => void, disabled: boolean, icon: any }) {
+function PaginationButton({ onClick, disabled, icon: Icon }: { onClick: () => void, disabled: boolean, icon: LucideIcon }) {
     return (
         <button
             onClick={onClick}
@@ -298,7 +297,6 @@ function TypeCard({ type, id }: { type: NamedAPIResource, id: string }) {
                     style.border,
                     "group-hover:border-accent/40"
                 )}>
-                    {/* Atmospheric Overlay */}
                     <div className={cn("absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none", style.bg)} />
 
                     <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.1] transition-opacity">

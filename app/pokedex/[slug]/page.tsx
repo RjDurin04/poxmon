@@ -35,6 +35,11 @@ export default async function PokedexDetailPage({ params }: PageProps) {
 
                     <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-12 text-center md:text-left">
                         <div className="relative">
+                            {/* Decorative Background Label */}
+                            <span className="text-[5rem] sm:text-[8rem] lg:text-[14rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] uppercase">
+                                POKEDEX
+                            </span>
+
                             <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
                                 <div className="p-2 rounded-xl bg-accent text-white shadow-[0_0_20px_rgba(var(--color-accent-rgb),0.3)]">
                                     <BookOpen className="w-5 h-5" />

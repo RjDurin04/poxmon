@@ -12,8 +12,14 @@ import {
     Swords,
     ChevronRight,
     Activity,
-    FileText
+    FileText,
+    Clock,
+    Scale,
+    Trash2,
+    Leaf
 } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
+import { cn } from "@/lib/utils";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -25,182 +31,289 @@ export default async function BerryDetailPage({ params }: PageProps) {
     const item = await getItemDetail(berry.item.name);
 
     return (
-        <div className="min-h-screen bg-bg-primary pb-20">
-            {/* Immersive Header */}
-            <div className="relative overflow-hidden pt-20 pb-16 px-4 md:px-8 border-b border-border">
-                <div className="absolute -top-24 -left-24 w-96 h-96 blur-[120px] rounded-full opacity-10 bg-green-500" />
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 blur-[120px] rounded-full opacity-5 bg-green-500" />
+        <div className="min-h-screen bg-bg-primary text-text-primary selection:bg-green-500/30 font-sans overflow-x-hidden relative">
+            {/* Background Accents */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[10%] left-[-5%] w-[40%] h-[40%] bg-green-500/5 blur-[120px] rounded-full" />
+                <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-green-500/5 blur-[120px] rounded-full" />
+            </div>
 
-                <div className="max-w-7xl mx-auto relative px-4 md:px-0">
-                    <Link
-                        href="/berries"
-                        className="group flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors mb-8"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        <span>Berries</span>
-                    </Link>
+            {/* Floating Back Button */}
+            <div className="fixed top-28 left-6 sm:left-12 z-[110]">
+                <BackButton variant="floating" label="Back to Berries" fallbackPath="/berries" />
+            </div>
 
-                    <div className="flex flex-col md:flex-row items-center md:items-end gap-8">
-                        {/* Berry Sprite Card */}
-                        <div className="relative group">
-                            <div className="absolute inset-0 bg-green-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                            <div className="relative w-48 h-48 bg-bg-secondary rounded-3xl border border-border shadow-2xl flex items-center justify-center p-8 overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
-                                {item.sprites.default ? (
-                                    <div className="relative w-32 h-32 scale-150">
-                                        <Image
-                                            src={item.sprites.default as string}
-                                            alt={berry.name}
-                                            fill
-                                            className="object-contain"
-                                            unoptimized
+            {/* Header Content */}
+            <header className="relative z-20 pt-32 sm:pt-48 pb-12 sm:pb-32 px-4 sm:px-8 max-w-7xl mx-auto">
+                <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-12">
+                    <div className="relative flex flex-col items-center lg:items-start text-center lg:text-left">
+                        {/* Decorative Background ID */}
+                        <span className="text-[5rem] sm:text-[8rem] lg:text-[16rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1]">
+                            BERRY
+                        </span>
+
+                        <div className="flex items-center gap-4 mb-6 flex-wrap justify-center lg:justify-start">
+                            <span className="px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-black uppercase tracking-widest">
+                                Berry ID #{berry.id.toString().padStart(3, "0")}
+                            </span>
+                            <span className="px-4 py-1.5 rounded-full bg-bg-secondary border border-border/50 text-text-muted text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                                <Wind className="w-3 h-3" />
+                                {berry.firmness.name.replace(/-/g, " ")}
+                            </span>
+                        </div>
+
+                        <h1 className="text-5xl sm:text-7xl lg:text-[10rem] font-black text-text-primary uppercase tracking-tighter leading-[0.8] mb-8">
+                            {berry.name}
+                        </h1>
+
+                        <div className="flex flex-wrap gap-4 items-center justify-center lg:justify-start">
+                            <div className="flex gap-2">
+                                <Link
+                                    href={`/items/${berry.item.name}`}
+                                    className="px-6 py-2 rounded-2xl bg-bg-secondary border border-border/50 text-xs font-black uppercase tracking-widest hover:border-green-500 hover:text-green-400 transition-all shadow-lg flex items-center gap-2"
+                                >
+                                    <Leaf className="w-3 h-3" />
+                                    Internal Item View
+                                </Link>
+                            </div>
+                            <div className="h-4 w-px bg-border hidden sm:block" />
+                            <span className="text-xl font-bold text-text-muted italic opacity-60">Natural Gift Power: {berry.natural_gift_power}</span>
+                        </div>
+                    </div>
+
+                    {/* Berry Visualizer */}
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-green-500/20 blur-[80px] rounded-full scale-110 opacity-50 group-hover:opacity-100 transition-all duration-1000" />
+                        <div className="relative w-48 h-48 sm:w-64 sm:h-64 bg-bg-secondary/40 backdrop-blur-3xl rounded-[3rem] border border-white/5 flex items-center justify-center p-8 shadow-2xl overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
+                            {item.sprites.default ? (
+                                <Image
+                                    src={item.sprites.default}
+                                    alt={berry.name}
+                                    width={160}
+                                    height={160}
+                                    className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-125 transition-transform duration-700 relative z-10"
+                                    unoptimized
+                                />
+                            ) : (
+                                <Grape className="w-24 h-24 text-green-500/20" />
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Main Content Grid */}
+            <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-32 space-y-20 sm:space-y-32">
+
+                {/* Section 1: Growth & Harvesting Profile */}
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+                    <div className="space-y-12">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-green-500/5 flex items-center justify-center border border-green-500/10">
+                                <Activity className="w-6 h-6 text-green-400" />
+                            </div>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-text-muted">Growth & Harvesting</h2>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                            {[
+                                { label: "Growth Time", value: `${berry.growth_time}`, unit: "h / stage", icon: Clock, color: "text-blue-400" },
+                                { label: "Max Harvest", value: `${berry.max_harvest}`, unit: "berries", icon: Grape, color: "text-red-400" },
+                                { label: "Soil Dryness", value: `${berry.soil_dryness}`, unit: "rate", icon: Droplets, color: "text-amber-400" },
+                                { label: "Size", value: `${berry.size / 10}`, unit: "cm", icon: Maximize2, color: "text-purple-400" },
+                            ].map((stat, i) => (
+                                <div key={i} className="bg-bg-secondary/40 backdrop-blur-xl border border-border/50 p-6 rounded-[2rem] group hover:border-green-500/30 transition-all">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <stat.icon className={`w-5 h-5 ${stat.color} opacity-40 group-hover:opacity-100 transition-opacity`} />
+                                        <span className="text-[8px] font-black text-text-muted uppercase tracking-widest">API Data</span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <div className="flex items-baseline gap-1">
+                                            <span className="text-3xl font-black text-text-primary tracking-tighter">{stat.value}</span>
+                                            <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">{stat.unit}</span>
+                                        </div>
+                                        <span className="text-[9px] font-black text-text-muted uppercase tracking-[0.2em] mt-1">{stat.label}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="space-y-12">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-accent/5 flex items-center justify-center border border-accent/10">
+                                <Swords className="w-6 h-6 text-accent" />
+                            </div>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-text-muted">Natural Gift</h2>
+                        </div>
+
+                        <div className="p-8 bg-bg-secondary/40 backdrop-blur-xl border border-white/5 rounded-[3rem] relative overflow-hidden group">
+                            <div className="absolute -right-8 -bottom-8 text-[12rem] font-black text-accent/5 leading-none select-none pointer-events-none group-hover:text-accent/10 transition-colors italic">
+                                GIFT
+                            </div>
+                            <div className="relative z-10 flex flex-col gap-8">
+                                <div className="flex items-center gap-6">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-2">Gift Type</span>
+                                        <Link
+                                            href={`/types/${berry.natural_gift_type.name}`}
+                                            className="text-4xl sm:text-6xl font-black text-text-primary hover:text-accent transition-colors capitalize tracking-tighter"
+                                        >
+                                            {berry.natural_gift_type.name}
+                                        </Link>
+                                    </div>
+                                    <div className="h-20 w-px bg-white/5" />
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-2">Base Power</span>
+                                        <span className="text-4xl sm:text-6xl font-black text-text-primary tracking-tighter font-mono">
+                                            {berry.natural_gift_power}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 p-4 rounded-2xl bg-accent/5 border border-accent/10">
+                                    <Info className="w-4 h-4 text-accent shrink-0" />
+                                    <p className="text-[10px] font-bold text-text-secondary uppercase tracking-wider leading-relaxed">
+                                        This berry activates a {berry.natural_gift_type.name}-type physical move with {berry.natural_gift_power} power when used as a Natural Gift.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Section 2: Flavor Matrix */}
+                <section className="space-y-12">
+                    <div className="flex flex-col items-center text-center">
+                        <div className="w-12 h-12 rounded-2xl bg-purple-500/5 flex items-center justify-center border border-purple-500/10 mb-6">
+                            <Grape className="w-6 h-6 text-purple-400" />
+                        </div>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-text-muted">Flavor Matrix</h2>
+                        <p className="text-xl font-black text-text-muted max-w-2xl tracking-tighter mt-4 italic opacity-60">Potency analysis across all recognized flavor profiles.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                        {berry.flavors.map((f, i) => (
+                            <div key={f.flavor.name} className="bg-bg-secondary/40 backdrop-blur-xl border border-border/50 p-8 rounded-[2.5rem] group hover:border-accent/30 transition-all flex flex-col items-center">
+                                <div className="relative w-24 h-24 mb-6 flex items-center justify-center">
+                                    {/* Circular Progress */}
+                                    <svg className="w-full h-full -rotate-90">
+                                        <circle cx="50%" cy="50%" r="42" className="stroke-white/5 fill-none" strokeWidth="8" />
+                                        <circle
+                                            cx="50%" cy="50%" r="42"
+                                            className={cn("fill-none transition-all duration-1000", f.potency > 0 ? "stroke-accent" : "stroke-white/10")}
+                                            strokeWidth="8"
+                                            strokeDasharray={2 * Math.PI * 42}
+                                            strokeDashoffset={2 * Math.PI * 42 * (1 - Math.min(1, f.potency / 40))}
+                                            strokeLinecap="round"
                                         />
-                                    </div>
-                                ) : (
-                                    <div className="w-32 h-32 flex items-center justify-center">
-                                        <Grape className="w-16 h-16 text-green-500/20" />
-                                    </div>
-                                )}
+                                    </svg>
+                                    <span className="absolute text-2xl font-black text-text-primary font-mono">{f.potency}</span>
+                                </div>
+                                <span className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em] mb-1">{f.flavor.name}</span>
+                                <div className="h-1 w-8 rounded-full bg-white/5 group-hover:bg-accent/30 transition-all" />
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="bg-bg-secondary/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] flex items-center justify-between group">
+                            <div className="flex items-center gap-6">
+                                <div className="w-12 h-12 rounded-2xl bg-blue-500/5 flex items-center justify-center border border-blue-500/10">
+                                    <Scale className="w-6 h-6 text-blue-400" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[8px] font-black text-text-muted uppercase tracking-widest mb-1">Texture Smoothness</span>
+                                    <span className="text-3xl font-black text-text-primary tracking-tighter">{berry.smoothness}</span>
+                                </div>
+                            </div>
+                            <div className="hidden sm:block h-12 w-px bg-white/5" />
+                            <div className="hidden sm:flex flex-col items-end">
+                                <span className="text-[8px] font-black text-text-muted uppercase tracking-widest mb-1">API Ref</span>
+                                <span className="text-[10px] font-bold text-text-secondary">Value {berry.smoothness}.0</span>
                             </div>
                         </div>
 
-                        <div className="flex-1 text-center md:text-left">
-                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4">
-                                <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-border bg-bg-secondary text-green-500">
-                                    Berry Specimen
-                                </span>
-                                <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-500/20 bg-green-500/5 text-green-400 flex items-center gap-1.5">
-                                    <Wind className="w-3 h-3" />
-                                    {berry.firmness.name.replace(/-/g, " ")}
-                                </span>
+                        <div className="bg-bg-secondary/40 backdrop-blur-xl border border-white/5 p-8 rounded-[2.5rem] flex items-center justify-between group">
+                            <div className="flex items-center gap-6">
+                                <div className="w-12 h-12 rounded-2xl bg-emerald-500/5 flex items-center justify-center border border-emerald-500/10">
+                                    <Activity className="w-6 h-6 text-emerald-400" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[8px] font-black text-text-muted uppercase tracking-widest mb-1">Consumption Firmness</span>
+                                    <span className="text-3xl font-black text-text-primary tracking-tighter capitalize">{berry.firmness.name.replace(/-/g, " ")}</span>
+                                </div>
                             </div>
-                            <h1 className="text-5xl md:text-7xl font-black text-text-primary capitalize tracking-tighter mb-4">
-                                {berry.name} <span className="text-text-muted/20 text-3xl md:text-5xl block md:inline">Berry</span>
-                            </h1>
-                            <p className="text-lg text-text-secondary max-w-2xl leading-relaxed italic opacity-80">
-                                A {berry.firmness.name.replace(/-/g, " ")} berry often used in battle for its natural {berry.natural_gift_type.name} properties.
+                        </div>
+                    </div>
+                </section>
+
+                {/* Section 3: Item Data */}
+                <section className="space-y-12">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-accent/5 flex items-center justify-center border border-accent/10">
+                            <FileText className="w-6 h-6 text-accent" />
+                        </div>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-text-muted">Item Details</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2 bg-bg-secondary/40 backdrop-blur-xl border border-white/5 p-10 sm:p-14 rounded-[3rem] relative group">
+                            <div className="absolute top-8 right-8 flex items-center gap-2 opacity-20 group-hover:opacity-100 transition-opacity">
+                                <span className="text-[8px] font-black uppercase tracking-widest">Type: {item.category.name}</span>
+                                <div className="w-2 h-2 rounded-full bg-accent" />
+                            </div>
+                            <p className="text-xl sm:text-3xl lg:text-4xl font-black leading-[1.2] tracking-tight text-text-primary mb-12">
+                                {item.effect_entries.find(e => e.language.name === "en")?.effect.replace(/\n|§/g, " ")}
                             </p>
-                        </div>
-
-                        <div className="hidden lg:flex items-center gap-6 bg-bg-secondary/50 backdrop-blur-md p-6 rounded-2xl border border-border shadow-xl">
-                            <div className="text-center px-4">
-                                <div className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Natural Gift Power</div>
-                                <div className="text-2xl font-black text-text-primary font-mono">{berry.natural_gift_power}P</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-                    {/* Cultivation Data */}
-                    <div className="lg:col-span-1 space-y-6">
-                        <div className="bg-bg-secondary rounded-2xl p-8 border border-border bg-gradient-to-br from-bg-secondary to-bg-tertiary/30 shadow-sm">
-                            <div className="flex items-center gap-3 mb-8">
-                                <Sparkles className="w-4 h-4 text-green-400" />
-                                <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Growth Info</h2>
-                            </div>
-
-                            <div className="space-y-6">
-                                <StatCard icon={<Droplets className="w-4 h-4 text-blue-400" />} label="Growth Time" value={`${berry.growth_time}h`} unit="per stage" />
-                                <StatCard icon={<Maximize2 className="w-4 h-4 text-purple-400" />} label="Size" value={`${berry.size / 10}cm`} />
-                                <StatCard icon={<Grape className="w-4 h-4 text-red-500" />} label="Max Harvest" value={`${berry.max_harvest}`} unit="berries" />
-                                <StatCard icon={<Activity className="w-4 h-4 text-yellow-400" />} label="Smoothness" value={`${berry.smoothness}`} />
-                                <StatCard icon={<Droplets className="w-4 h-4 text-amber-500" />} label="Soil Dryness" value={`${berry.soil_dryness}`} unit="rate" />
-                                <StatCard icon={<Droplets className="w-4 h-4 text-amber-500" />} label="Soil Dryness" value={`${berry.soil_dryness}`} unit="rate" />
-                            </div>
-                        </div>
-
-                        {/* Gift Type */}
-                        <div className="bg-bg-secondary rounded-2xl p-8 border border-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-8">
-                                <Swords className="w-4 h-4 text-accent" />
-                                <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Natural Gift</h2>
-                            </div>
-                            <div className="flex items-center justify-between p-4 bg-bg-tertiary border border-border rounded-xl">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-bg-secondary border border-border flex items-center justify-center font-black text-[10px] uppercase text-accent">
-                                        Type
-                                    </div>
-                                    <span className="text-sm font-black text-text-primary capitalize">{berry.natural_gift_type.name}</span>
+                            <div className="flex gap-4">
+                                <div className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-text-muted">
+                                    Cost: {item.cost}P
                                 </div>
-                                <ChevronRight className="w-4 h-4 text-text-muted" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right Column: Flavor Matrix */}
-                    <div className="lg:col-span-2 space-y-8">
-                        <div className="bg-bg-secondary rounded-2xl p-8 border border-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-10">
-                                <Info className="w-4 h-4 text-accent" />
-                                <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Flavors</h2>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {berry.flavors.map((f) => (
-                                    <div key={f.flavor.name} className="relative p-6 bg-bg-tertiary/30 border border-border rounded-2xl overflow-hidden group">
-                                        <div className={`absolute bottom-0 left-0 h-1 transition-all duration-700 ${f.potency > 0 ? "bg-accent" : "bg-text-muted/20"}`} style={{ width: `${Math.min(100, (f.potency / 40) * 100)}%` }} />
-                                        <div className="flex justify-between items-start mb-4">
-                                            <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">{f.flavor.name}</span>
-                                            <span className="text-xl font-black text-text-primary font-mono">{f.potency}</span>
-                                        </div>
-                                        <div className="h-6 w-full flex items-end gap-1">
-                                            {Array.from({ length: 12 }).map((_, i) => (
-                                                <div
-                                                    key={i}
-                                                    className={`flex-1 rounded-sm transition-all duration-500 ${i < (f.potency / 40) * 12 ? 'bg-accent' : 'bg-bg-secondary'}`}
-                                                    style={{ height: `${20 + i * 5}%` }}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Description/Item Info */}
-                        <div className="bg-bg-secondary rounded-2xl p-8 border border-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-6">
-                                <FileText className="w-4 h-4 text-accent" />
-                                <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Item Info</h2>
-                            </div>
-                            <div className="space-y-6">
-                                <p className="text-text-primary text-xl font-medium leading-relaxed">
-                                    {item.effect_entries.find(e => e.language.name === "en")?.effect.replace(/\n|§/g, " ")}
-                                </p>
-                                <div className="p-4 bg-bg-tertiary/50 border border-border rounded-xl">
-                                    <div className="text-[9px] font-black text-text-muted uppercase tracking-tighter mb-2">Item Category</div>
-                                    <div className="text-sm font-black text-text-primary uppercase flex items-center gap-2">
-                                        {item.category.name.replace(/-/g, " ")}
-                                        <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                                        {item.id} #ID
-                                    </div>
+                                <div className="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-text-muted">
+                                    Fling Power: {item.fling_power || 0}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
-function StatCard({ icon, label, value, unit }: { icon: React.ReactNode, label: string, value: string, unit?: string }) {
-    return (
-        <div className="flex items-center justify-between group">
-            <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-bg-tertiary border border-border transition-colors group-hover:border-accent/30 text-accent">
-                    {icon}
-                </div>
-                <span className="text-sm font-bold text-text-secondary">{label}</span>
-            </div>
-            <div className="text-right">
-                <span className="text-lg font-black text-text-primary">{value}</span>
-                {unit && <span className="text-[9px] font-black text-text-muted block uppercase -mt-1">{unit}</span>}
+                        <div className="bg-bg-secondary/40 backdrop-blur-xl border border-white/5 p-10 rounded-[3rem] flex flex-col justify-between group">
+                            <div className="space-y-6">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-text-muted">Item Category</span>
+                                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                </div>
+                                <h3 className="text-3xl font-black uppercase tracking-tighter leading-none text-text-primary group-hover:text-accent transition-colors">
+                                    {item.category.name.replace(/-/g, " ")}
+                                </h3>
+                                <div className="h-px w-full bg-white/5" />
+                                <div className="space-y-2">
+                                    <span className="text-[8px] font-black text-text-muted uppercase tracking-widest">Attributes</span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {item.attributes.map(attr => (
+                                            <span key={attr.name} className="px-3 py-1 rounded-lg bg-bg-tertiary border border-border/50 text-[8px] font-black uppercase tracking-widest">
+                                                {attr.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="pt-8 flex items-center justify-between text-[10px] font-black text-text-muted uppercase tracking-widest mt-auto">
+                                <span>Record ID</span>
+                                <span className="font-mono">#{item.id.toString().padStart(4, "0")}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            {/* Termination Footer */}
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-32 border-t border-white/5 relative z-10 flex flex-col items-center text-center">
+                <Link href="/berries" className="group flex flex-col items-center gap-8">
+                    <div className="w-20 h-20 rounded-[2.5rem] bg-bg-secondary border border-white/5 group-hover:border-green-500 group-hover:bg-green-500/20 flex items-center justify-center transition-all duration-700">
+                        <ArrowLeft className="w-8 h-8 text-text-muted group-hover:text-green-400 transition-colors" />
+                    </div>
+                    <span className="text-xs font-black uppercase tracking-[1em] text-text-muted group-hover:text-green-500 transition-all pl-[1em]">Back to Berries</span>
+                </Link>
             </div>
         </div>
     );

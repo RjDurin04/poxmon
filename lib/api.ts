@@ -9,6 +9,7 @@ async function apiFetch<T>(endpoint: string, retries = 3): Promise<T> {
         try {
             const res = await fetch(url, {
                 next: { revalidate: 3600 },
+                cache: 'force-cache'
             } as NextFetchOptions);
 
             if (!res.ok) {
@@ -16,12 +17,13 @@ async function apiFetch<T>(endpoint: string, retries = 3): Promise<T> {
                 throw new Error(`API Error: ${res.status} ${res.statusText}`);
             }
 
-            const text = await res.text();
-            if (!text) throw new Error("Empty response from API");
-            return JSON.parse(text) as T;
-        } catch (error) {
+            return await res.json() as T;
+        } catch (error: any) {
             const isLastRetry = i === retries - 1;
-            console.error(`Fetch attempt ${i + 1} failed for ${url}:`, error);
+            console.error(`[API ERROR] Fetch attempt ${i + 1} failed for ${url}:`);
+            console.error(`Message: ${error.message}`);
+            if (error.cause) console.error(`Cause:`, error.cause);
+            if (error.stack) console.error(`Stack: ${error.stack}`);
 
             if (isLastRetry) throw error;
             await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));

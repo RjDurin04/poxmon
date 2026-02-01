@@ -27,7 +27,7 @@ interface GamesClientProps {
     totalCount: number;
 }
 
-export function GamesClient({ initialGens, totalCount }: GamesClientProps) {
+export function GenerationsClient({ initialGens, totalCount }: { initialGens: NamedAPIResource[], totalCount: number }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [cols, setCols] = useState(4);
@@ -92,21 +92,24 @@ export function GamesClient({ initialGens, totalCount }: GamesClientProps) {
                             <History className="w-6 h-6 text-white" />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent leading-none mb-1.5">Game Registry</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent leading-none mb-1.5">Generational Registry</span>
                             <span className="text-xs font-black text-text-muted uppercase tracking-widest">PokeAPI v2</span>
                         </div>
                     </motion.div>
 
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
                         <div className="relative">
+                            <span className="text-[5rem] sm:text-[8rem] lg:text-[14rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] uppercase">
+                                GENERATION
+                            </span>
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                                className="text-6xl md:text-[8rem] font-black uppercase tracking-tighter leading-[0.85] sm:leading-[0.8] mb-8"
+                                className="text-6xl md:text-[8rem] font-black uppercase tracking-tighter leading-[0.85] sm:leading-[0.8] mb-8 relative z-10"
                             >
-                                Games<br />
-                                <span className="text-accent underline decoration-4 underline-offset-8 decoration-accent/20">Directory</span>
+                                GENERATIONAL<br />
+                                <span className="text-accent underline decoration-4 underline-offset-8 decoration-accent/20">Registry</span>
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0 }}

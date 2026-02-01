@@ -162,9 +162,9 @@ function AudioPlayer({ cries }: { cries: { latest: string | null; legacy: string
                 await playPromise;
             }
             setIsPlaying(type);
-        } catch (error: any) {
+        } catch (error) {
             // Silently handle AbortError which occurs when play() is interrupted
-            if (error.name !== 'AbortError') {
+            if (error instanceof Error && error.name !== 'AbortError') {
                 console.error("Audio playback failed:", error);
             }
             setIsPlaying(null);
@@ -275,8 +275,8 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
 
                 <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12 relative overflow-visible max-w-full">
                     <div className="relative max-w-full overflow-visible">
-                        <span className="text-[5rem] sm:text-[8rem] lg:text-[16rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] block">
-                            {pokemon.id.toString().padStart(3, "0")}
+                        <span className="text-[5rem] sm:text-[8rem] lg:text-[16rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] block uppercase">
+                            POKEMON
                         </span>
                         <div className="relative z-10 flex flex-col max-w-full overflow-hidden sm:overflow-visible">
                             <div className="flex items-center gap-4 mb-4 flex-wrap">
@@ -548,7 +548,7 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                             <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-transparent rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                             <div className="relative p-6 sm:p-10 lg:p-14 bg-bg-secondary/40 backdrop-blur-xl border border-white/5 rounded-[2rem] h-full overflow-visible">
                                 {/* Decorative quote mark */}
-                                <div className="absolute -top-8 -left-4 text-[15rem] font-black text-accent/5 leading-none select-none pointer-events-none">"</div>
+                                <div className="absolute -top-8 -left-4 text-[15rem] font-black text-accent/5 leading-none select-none pointer-events-none">&quot;</div>
 
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-3 mb-8">
@@ -691,7 +691,7 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center border border-accent/20">
                                     <Egg className="w-5 h-5 text-accent" />
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Breeding</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Egg Groups</span>
                             </div>
 
                             {/* Egg Groups */}
@@ -1070,9 +1070,9 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                     </div>
                 </section>
 
-                {/* Section 8: Specimen Variations (Pokemon Forms) */}
+                {/* Section 8: Specimen Variations (Species Varieties) */}
                 <section className="space-y-12">
-                    <SectionHeader title="Pokemon Forms" icon={Package} />
+                    <SectionHeader title="Species Varieties" icon={Package} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {species.varieties && species.varieties.length > 1 ? (
                             species.varieties.map((v) => (
@@ -1218,13 +1218,13 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                     </section>
                 )}
 
-                {/* Section 12: Game Appearances (game_indices) */}
+                {/* Section 12: Version Appearances (game_indices) */}
                 {pokemon.game_indices && pokemon.game_indices.length > 0 && (
                     <section className="space-y-12">
-                        <SectionHeader title="Game Appearances" icon={Gamepad2} />
+                        <SectionHeader title="Version Appearances" icon={Gamepad2} />
                         <div className="p-6 sm:p-10 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem]">
                             <p className="text-sm text-text-muted font-bold mb-8">
-                                Internal game indices for this Pokémon across different game versions.
+                                Internal version indices for this Pokémon across different game releases.
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
                                 {pokemon.game_indices.map((gi, idx) => gi.version && (

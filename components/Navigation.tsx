@@ -20,7 +20,7 @@ const NAV_ITEMS = [
     { href: "/types", label: "Types", icon: Shapes },
     { href: "/items", label: "Items", icon: Briefcase },
     { href: "/berries", label: "Berries", icon: Grape },
-    { href: "/games", label: "Games", icon: Gamepad2 },
+    { href: "/games", label: "Generations", icon: Gamepad2 },
 ];
 
 export function Navigation() {
