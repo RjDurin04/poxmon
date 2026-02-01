@@ -84,7 +84,7 @@ function PaginatedGridContent({
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <div className="bg-gradient-to-b from-bg-secondary to-bg-primary py-12 px-4 md:px-8">
+            <div className="pt-32 pb-12 px-4 md:px-8">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-3">
                         {title}

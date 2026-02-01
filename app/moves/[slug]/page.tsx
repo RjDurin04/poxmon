@@ -301,6 +301,24 @@ export default async function MoveDetailPage({ params }: PageProps) {
                                 </div>
                             )}
 
+                            {/* Effect Changes */}
+                            {move.effect_changes && move.effect_changes.length > 0 && (
+                                <div className="mb-8 space-y-4">
+                                    <span className="text-[8px] font-black uppercase text-text-muted block mb-2">Effect Changes</span>
+                                    {move.effect_changes.map((change, idx) => (
+                                        <div key={idx} className="p-4 bg-bg-tertiary/50 rounded-xl border border-border border-l-4 border-l-amber-500">
+                                            <div className="font-black text-amber-500 uppercase mb-2 tracking-widest text-xs flex items-center gap-2">
+                                                <History className="w-3 h-3" />
+                                                Modified in {change.version_group.name.replace(/-/g, " ")}
+                                            </div>
+                                            <p className="text-sm text-text-secondary leading-relaxed">
+                                                {change.effect_entries.find(e => e.language.name === "en")?.effect || "Unknown modification recorded."}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
                             <div className="space-y-4">
                                 <span className="text-[8px] font-black uppercase text-text-muted block mb-2">Flavor Text History</span>
                                 {history.map((entry, idx) => (

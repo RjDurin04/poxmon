@@ -1,16 +1,14 @@
 import { getMoveList } from "@/lib/api";
-import { PaginatedGrid } from "@/components/PaginatedGrid";
+import { MovesClient } from "@/components/MovesClient";
 
 export default async function MovesPage() {
+    // Fetch all moves (approx 900+) to enable fast client-side searching
     const moveList = await getMoveList(1000, 0);
 
     return (
-        <PaginatedGrid
-            items={moveList.results}
-            title="Moves"
-            description={`${moveList.count} combat techniques in the database`}
-            basePath="/moves"
-            rowsLocked={10}
+        <MovesClient
+            initialMoves={moveList.results}
+            totalCount={moveList.count}
         />
     );
 }

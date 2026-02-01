@@ -127,7 +127,42 @@ export default async function GenerationDetailPage({ params }: PageProps) {
                     </div>
 
                     {/* Technical & Elemental Arsenal */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+
+                        {/* New Abilities */}
+                        <div className="bg-bg-secondary rounded-[40px] p-10 border border-border shadow-sm group">
+                            <div className="flex items-center justify-between mb-12">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 rounded-2xl bg-bg-tertiary border border-border group-hover:border-accent/40 transition-colors">
+                                        <Zap className="w-6 h-6 text-accent" />
+                                    </div>
+                                    <h3 className="text-xl font-black text-text-primary uppercase tracking-tighter">New Abilities</h3>
+                                </div>
+                                <span className="text-[10px] font-black text-text-muted bg-bg-tertiary px-4 py-1.5 rounded-full border border-border">
+                                    {gen.abilities.length} ABILITIES
+                                </span>
+                            </div>
+
+                            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                {gen.abilities.map((ability) => (
+                                    <Link
+                                        key={ability.name}
+                                        href={`/abilities/${ability.name}`}
+                                        className="flex items-center justify-between p-4 bg-bg-tertiary/50 rounded-xl border border-transparent hover:border-accent/20 hover:bg-bg-tertiary transition-all group/ability"
+                                    >
+                                        <span className="text-xs font-bold text-text-secondary capitalize group-hover/ability:text-text-primary transition-colors">
+                                            {ability.name.replace(/-/g, " ")}
+                                        </span>
+                                        <ArrowLeft className="w-3 h-3 text-text-muted opacity-0 group-hover/ability:opacity-100 transition-opacity rotate-180" />
+                                    </Link>
+                                ))}
+                                {gen.abilities.length === 0 && (
+                                    <div className="p-10 text-center border-2 border-dashed border-border rounded-3xl opacity-50 italic text-sm">
+                                        No new abilities introduced.
+                                    </div>
+                                )}
+                            </div>
+                        </div>
 
                         {/* New Moves Analysis */}
                         <div className="bg-bg-secondary rounded-[40px] p-10 border border-border shadow-sm group">

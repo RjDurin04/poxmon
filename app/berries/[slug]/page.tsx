@@ -109,6 +109,8 @@ export default async function BerryDetailPage({ params }: PageProps) {
                                 <StatCard icon={<Maximize2 className="w-4 h-4 text-purple-400" />} label="Size" value={`${berry.size / 10}cm`} />
                                 <StatCard icon={<Grape className="w-4 h-4 text-red-500" />} label="Max Harvest" value={`${berry.max_harvest}`} unit="berries" />
                                 <StatCard icon={<Activity className="w-4 h-4 text-yellow-400" />} label="Smoothness" value={`${berry.smoothness}`} />
+                                <StatCard icon={<Droplets className="w-4 h-4 text-amber-500" />} label="Soil Dryness" value={`${berry.soil_dryness}`} unit="rate" />
+                                <StatCard icon={<Droplets className="w-4 h-4 text-amber-500" />} label="Soil Dryness" value={`${berry.soil_dryness}`} unit="rate" />
                             </div>
                         </div>
 

@@ -13,35 +13,10 @@ interface PokemonGridProps {
 export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
     const [query, setQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [isMounted, setIsMounted] = useState(false);
-    const [cols, setCols] = useState(0);
     const gridTopRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsMounted(true);
-    }, []);
-
-    // Track columns based on window size
-    useEffect(() => {
-        if (!isMounted) return;
-
-        const updateCols = () => {
-            const width = window.innerWidth;
-            if (width < 640) setCols(2);
-            else if (width < 768) setCols(3);
-            else if (width < 1024) setCols(4);
-            else if (width < 1280) setCols(5);
-            else setCols(6);
-        };
-
-        updateCols();
-        window.addEventListener("resize", updateCols);
-        return () => window.removeEventListener("resize", updateCols);
-    }, [isMounted]);
-
-    const effectiveCols = cols || 2;
-    const itemsPerPage = effectiveCols * 5;
+    // Fixed number of items per page to prevent layout shifts
+    const itemsPerPage = 30;
 
     const filtered = useMemo(() =>
         initialPokemon.filter((p) =>
@@ -68,7 +43,7 @@ export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <div className="bg-gradient-to-b from-bg-secondary to-bg-primary py-12 px-4 md:px-8">
+            <div className="pt-32 pb-12 px-4 md:px-8">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-3">
                         Pokédex
@@ -101,7 +76,7 @@ export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
             <div className="max-w-7xl mx-auto px-4 md:px-8 py-8" ref={gridTopRef}>
                 <div className="flex justify-between items-end mb-6">
                     <div className="text-sm text-text-secondary">
-                        Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, filtered.length)} of {filtered.length} Pokemon
+                        Showing {filtered.length > 0 ? startIndex + 1 : 0}-{Math.min(startIndex + itemsPerPage, filtered.length)} of {filtered.length} Pokemon
                     </div>
                 </div>
 

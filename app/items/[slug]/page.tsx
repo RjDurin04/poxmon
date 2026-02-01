@@ -248,10 +248,33 @@ export default async function ItemDetailPage({ params }: PageProps) {
                                 </div>
                             </div>
                         )}
+
+                        {/* Game Appearances */}
+                        {item.game_indices && item.game_indices.length > 0 && (
+                            <div className="bg-bg-secondary rounded-2xl p-8 border border-border shadow-sm">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <History className="w-4 h-4 text-accent" />
+                                    <h2 className="text-[10px] font-black uppercase tracking-widest text-text-primary">Game Appearances</h2>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {item.game_indices.map((gi, idx) => (
+                                        <div key={idx} className="px-3 py-1.5 rounded-lg bg-bg-tertiary border border-border flex items-center gap-2">
+                                            <span className="text-[10px] font-bold text-text-muted uppercase tracking-tighter">
+                                                {gi.generation.name.replace("generation-", "Gen ")}
+                                            </span>
+                                            <span className="text-xs font-black text-text-primary uppercase">
+                                                {gi.game_index > 0 ? `#${gi.game_index}` : "Present"}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
+
     );
 }
 

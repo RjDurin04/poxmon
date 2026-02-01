@@ -36,6 +36,14 @@ import {
     Zap,
     Scan,
     Fingerprint,
+    History,
+    Gamepad2,
+    Globe,
+    Book,
+    Trees,
+    Layers,
+    Hash,
+    FileText,
 } from "lucide-react";
 import React, { useState, useRef, useMemo, type ComponentType } from "react";
 
@@ -251,23 +259,27 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
 
     return (
         <div className="min-h-screen bg-bg-primary text-text-primary selection:bg-accent/30 font-sans overflow-x-hidden relative">
+            {/* Floating Back Button - Persistent navigation, moved below navbar height */}
+            <div className="fixed top-28 left-6 sm:left-12 z-[110]">
+                <BackButton variant="floating" label="Back to Library" fallbackPath="/pokedex" />
+            </div>
+
             {/* Background Accents - Optimized for mobile viewport */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-[10%] left-[-10%] sm:left-[-5%] w-[80%] sm:w-[40%] h-[40%] bg-accent/5 blur-[80px] sm:blur-[120px] rounded-full" />
                 <div className="absolute bottom-[10%] right-[-10%] sm:right-[-5%] w-[80%] sm:w-[40%] h-[40%] bg-accent/5 blur-[80px] sm:blur-[120px] rounded-full" />
             </div>
 
-            {/* Header Content */}
-            <header className="relative z-20 pt-10 sm:pt-20 pb-12 sm:pb-32 px-4 sm:px-8 max-w-7xl mx-auto overflow-visible">
-                <BackButton label="Back to Pokedex" className="mb-8 sm:mb-16" />
+            {/* Header Content - Pushed down to clear fixed navbar */}
+            <header className="relative z-20 pt-32 sm:pt-48 pb-12 sm:pb-32 px-4 sm:px-8 max-w-7xl mx-auto overflow-visible">
 
                 <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12 relative overflow-visible max-w-full">
                     <div className="relative max-w-full overflow-visible">
-                        <span className="text-[5rem] sm:text-[8rem] lg:text-[16rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-0 block">
+                        <span className="text-[5rem] sm:text-[8rem] lg:text-[16rem] font-black text-white/[0.02] absolute -top-8 sm:-top-16 lg:-top-32 left-0 lg:-left-12 leading-none select-none pointer-events-none whitespace-nowrap z-[-1] block">
                             {pokemon.id.toString().padStart(3, "0")}
                         </span>
                         <div className="relative z-10 flex flex-col max-w-full overflow-hidden sm:overflow-visible">
-                            <div className="flex items-center gap-4 mb-4">
+                            <div className="flex items-center gap-4 mb-4 flex-wrap">
                                 <span className="px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-black uppercase tracking-widest">
                                     ID #{pokemon.id.toString().padStart(3, "0")}
                                 </span>
@@ -279,6 +291,16 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                                 <span className="px-4 py-1.5 rounded-full bg-bg-secondary border border-border/50 text-text-muted text-[10px] font-black uppercase tracking-widest">
                                     {species.generation.name.replace("generation-", "Gen ")}
                                 </span>
+                                {pokemon.is_default && (
+                                    <span className="px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest">
+                                        Default Form
+                                    </span>
+                                )}
+                                {pokemon.order > 0 && (
+                                    <span className="px-4 py-1.5 rounded-full bg-bg-secondary border border-border/50 text-text-muted text-[10px] font-black uppercase tracking-widest">
+                                        Order #{pokemon.order}
+                                    </span>
+                                )}
                             </div>
                             <h1 className="text-4xl sm:text-6xl lg:text-8xl xl:text-[10rem] font-black text-text-primary uppercase tracking-tighter leading-[0.8] mb-6">
                                 {pokemon.name}
@@ -855,9 +877,9 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                         <SectionHeader title="Moves" icon={Zap} />
 
                         {/* Moves Pagination */}
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col items-center md:items-end gap-3">
                             <span className="text-[8px] font-black text-text-muted uppercase tracking-[0.3em] italic opacity-50 ml-2">Moves Pagination</span>
-                            <div className="flex items-center bg-white/[0.03] backdrop-blur-md rounded-2xl p-1.5 sm:p-2 border border-white/5 shadow-2xl gap-2 sm:gap-3 group/limit">
+                            <div className="flex items-center bg-white/[0.03] backdrop-blur-md rounded-2xl p-1.5 sm:p-2 border border-white/5 shadow-2xl gap-2 sm:gap-3 group/limit max-w-full overflow-x-auto no-scrollbar">
                                 <button
                                     onClick={() => setMovePage(prev => Math.max(1, prev - 1))}
                                     disabled={movePage <= 1}
@@ -974,9 +996,9 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
 
                         {/* Locations Pagination */}
                         {totalLocationPages > 1 && (
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col items-center md:items-end gap-3">
                                 <span className="text-[8px] font-black text-text-muted uppercase tracking-[0.3em] italic opacity-50 ml-2">Locations Pagination</span>
-                                <div className="flex items-center bg-white/[0.03] backdrop-blur-md rounded-2xl p-1.5 sm:p-2 border border-white/5 shadow-2xl gap-2 sm:gap-3 group/limit">
+                                <div className="flex items-center bg-white/[0.03] backdrop-blur-md rounded-2xl p-1.5 sm:p-2 border border-white/5 shadow-2xl gap-2 sm:gap-3 group/limit max-w-full overflow-x-auto no-scrollbar">
                                     <button
                                         onClick={() => setLocationPage(prev => Math.max(1, prev - 1))}
                                         disabled={locationPage <= 1}
@@ -1073,6 +1095,254 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                         )}
                     </div>
                 </section>
+
+                {/* Section 9: Historical Type Changes (past_types) */}
+                {pokemon.past_types && pokemon.past_types.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Historical Types" icon={History} />
+                        <div className="p-6 sm:p-10 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem]">
+                            <p className="text-sm text-text-muted font-bold mb-8">
+                                Type classifications that were changed across different generations.
+                            </p>
+                            <div className="space-y-6">
+                                {pokemon.past_types.map((pt, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-white/[0.03] border border-white/5 rounded-2xl"
+                                    >
+                                        <div className="flex items-center gap-3 shrink-0">
+                                            <History className="w-4 h-4 text-amber-400" />
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">
+                                                Before {pt.generation.name.replace("generation-", "Gen ")}
+                                            </span>
+                                        </div>
+                                        <div className="h-4 w-px bg-white/10 hidden sm:block" />
+                                        <div className="flex flex-wrap gap-2">
+                                            {pt.types && pt.types.map((t) => t.type && (
+                                                <Link
+                                                    key={t.type.name}
+                                                    href={`/types/${t.type.name}`}
+                                                    className="px-4 py-2 rounded-xl bg-bg-secondary border border-border/50 text-xs font-black uppercase tracking-widest hover:border-accent hover:text-accent transition-all"
+                                                >
+                                                    {t.type.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 10: Historical Ability Changes (past_abilities) */}
+                {pokemon.past_abilities && pokemon.past_abilities.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Historical Abilities" icon={History} />
+                        <div className="p-6 sm:p-10 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem]">
+                            <p className="text-sm text-text-muted font-bold mb-8">
+                                Ability assignments that were changed across different generations.
+                            </p>
+                            <div className="space-y-6">
+                                {pokemon.past_abilities.map((pa, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="p-6 bg-white/[0.03] border border-white/5 rounded-2xl"
+                                    >
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <History className="w-4 h-4 text-purple-400" />
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-purple-400">
+                                                Before {pa.generation.name.replace("generation-", "Gen ")}
+                                            </span>
+                                        </div>
+                                        <div className="space-y-3">
+                                            {pa.abilities && pa.abilities.map((a, i) => a.ability && (
+                                                <Link
+                                                    key={i}
+                                                    href={`/abilities/${a.ability.name}`}
+                                                    className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-xl hover:border-accent transition-all group"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <Dna className="w-4 h-4 text-accent opacity-50 group-hover:opacity-100" />
+                                                        <span className="font-black capitalize text-sm group-hover:text-accent transition-colors">
+                                                            {a.ability.name.replace(/-/g, " ")}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-[9px] font-black uppercase tracking-widest text-text-muted">
+                                                        {a.is_hidden ? "Hidden" : `Slot ${a.slot}`}
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 11: Pokédex Entries (pokedex_numbers) */}
+                {species.pokedex_numbers && species.pokedex_numbers.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Pokédex Entries" icon={Book} />
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                            {species.pokedex_numbers.map((entry, idx) => entry.pokedex && (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.03 }}
+                                    className="p-6 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-2xl hover:border-accent/30 transition-all group"
+                                >
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Hash className="w-3 h-3 text-accent opacity-50 group-hover:opacity-100 transition-opacity" />
+                                        <span className="text-2xl font-black text-text-primary tracking-tighter">
+                                            {entry.entry_number}
+                                        </span>
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-text-muted">
+                                        {entry.pokedex.name.replace(/-/g, " ")}
+                                    </span>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 12: Game Appearances (game_indices) */}
+                {pokemon.game_indices && pokemon.game_indices.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Game Appearances" icon={Gamepad2} />
+                        <div className="p-6 sm:p-10 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem]">
+                            <p className="text-sm text-text-muted font-bold mb-8">
+                                Internal game indices for this Pokémon across different game versions.
+                            </p>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+                                {pokemon.game_indices.map((gi, idx) => gi.version && (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.02 }}
+                                        className="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-xl hover:border-accent/30 transition-all group"
+                                    >
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-text-muted group-hover:text-accent transition-colors truncate flex-1">
+                                            {gi.version.name}
+                                        </span>
+                                        <span className="text-sm font-black text-accent ml-2">
+                                            #{gi.game_index}
+                                        </span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 13: Pokemon Forms from pokemon.forms */}
+                {pokemon.forms && pokemon.forms.length > 1 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Registered Forms" icon={Layers} />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {pokemon.forms.map((form, idx) => form && (
+                                <motion.div
+                                    key={form.name}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.05 }}
+                                    className="p-6 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-2xl hover:border-accent/30 transition-all group"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center border border-accent/20">
+                                            <Layers className="w-5 h-5 text-accent" />
+                                        </div>
+                                        <span className="text-sm font-black uppercase tracking-widest text-text-primary group-hover:text-accent transition-colors">
+                                            {form.name.replace(/-/g, " ")}
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 14: Form Descriptions (form_descriptions) */}
+                {species.form_descriptions && species.form_descriptions.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Form Descriptions" icon={FileText} />
+                        <div className="space-y-4">
+                            {species.form_descriptions
+                                .filter(fd => fd.language.name === "en")
+                                .map((fd, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="p-6 sm:p-10 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem]"
+                                    >
+                                        <p className="text-lg font-bold text-text-primary leading-relaxed">
+                                            {fd.description}
+                                        </p>
+                                    </motion.div>
+                                ))}
+                        </div>
+                    </section>
+                )}
+
+                {/* Section 15: Pal Park Encounters (pal_park_encounters) */}
+                {species.pal_park_encounters && species.pal_park_encounters.length > 0 && (
+                    <section className="space-y-12">
+                        <SectionHeader title="Pal Park Data" icon={Trees} />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {species.pal_park_encounters.map((ppe, idx) => ppe.area && (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    className="p-6 sm:p-8 bg-bg-secondary/30 backdrop-blur-xl border border-white/5 rounded-[2rem] group hover:border-emerald-500/30 transition-all"
+                                >
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                                            <Trees className="w-6 h-6 text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-text-muted block">Area</span>
+                                            <span className="text-xl font-black capitalize text-text-primary group-hover:text-emerald-400 transition-colors">
+                                                {ppe.area.name.replace(/-/g, " ")}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
+                                            <span className="text-[8px] font-black uppercase tracking-widest text-text-muted block mb-2">Base Score</span>
+                                            <span className="text-2xl font-black text-emerald-400">{ppe.base_score}</span>
+                                        </div>
+                                        <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
+                                            <span className="text-[8px] font-black uppercase tracking-widest text-text-muted block mb-2">Encounter Rate</span>
+                                            <span className="text-2xl font-black text-accent">{ppe.rate}%</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* Final Held Items Section */}
                 <section className="pt-32 border-t border-white/5 space-y-12">

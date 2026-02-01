@@ -35,7 +35,7 @@ export default function RootLayout({
         )}
       >
         <Navigation />
-        <main className="pt-16">
+        <main>
           {children}
         </main>
       </body>
