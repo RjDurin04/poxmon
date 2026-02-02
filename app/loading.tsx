@@ -3,7 +3,7 @@ import { Loader2 } from "lucide-react";
 
 export default function RootLoading() {
     return (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg-primary overflow-hidden">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-bg-primary w-full relative overflow-hidden">
             {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--color-accent-rgb)_0.5px,_transparent_0.5px)] bg-[size:40px_40px] opacity-[0.03]" />
