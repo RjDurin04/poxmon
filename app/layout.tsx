@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={syncopate.variable}>
+    <html lang="en" className={syncopate.variable} data-scroll-behavior="smooth">
       <body
         className={cn(
           spaceGrotesk.className,
