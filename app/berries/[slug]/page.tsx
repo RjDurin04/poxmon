@@ -6,16 +6,13 @@ import {
     Wind,
     Droplets,
     Maximize2,
-    Sparkles,
     Info,
     Grape,
     Swords,
-    ChevronRight,
     Activity,
     FileText,
     Clock,
     Scale,
-    Trash2,
     Leaf
 } from "lucide-react";
 import { BackButton } from "@/components/BackButton";
@@ -122,8 +119,8 @@ export default async function BerryDetailPage({ params }: PageProps) {
                                 { label: "Max Harvest", value: `${berry.max_harvest}`, unit: "berries", icon: Grape, color: "text-red-400" },
                                 { label: "Soil Dryness", value: `${berry.soil_dryness}`, unit: "rate", icon: Droplets, color: "text-amber-400" },
                                 { label: "Size", value: `${berry.size / 10}`, unit: "cm", icon: Maximize2, color: "text-purple-400" },
-                            ].map((stat, i) => (
-                                <div key={i} className="bg-bg-secondary/40 backdrop-blur-xl border border-border/50 p-6 rounded-[2rem] group hover:border-green-500/30 transition-all">
+                            ].map((stat) => (
+                                <div key={stat.label} className="bg-bg-secondary/40 backdrop-blur-xl border border-border/50 p-6 rounded-[2rem] group hover:border-green-500/30 transition-all">
                                     <div className="flex items-center justify-between mb-4">
                                         <stat.icon className={`w-5 h-5 ${stat.color} opacity-40 group-hover:opacity-100 transition-opacity`} />
                                         <span className="text-[8px] font-black text-text-muted uppercase tracking-widest">API Data</span>
@@ -193,7 +190,7 @@ export default async function BerryDetailPage({ params }: PageProps) {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-                        {berry.flavors.map((f, i) => (
+                        {berry.flavors.map((f) => (
                             <div key={f.flavor.name} className="bg-bg-secondary/40 backdrop-blur-xl border border-border/50 p-8 rounded-[2.5rem] group hover:border-accent/30 transition-all flex flex-col items-center">
                                 <div className="relative w-24 h-24 mb-6 flex items-center justify-center">
                                     {/* Circular Progress */}

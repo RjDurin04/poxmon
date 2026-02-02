@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Syncopate, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navigation } from "@/components/Navigation";
@@ -7,6 +7,17 @@ import { Navigation } from "@/components/Navigation";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const syncopate = Syncopate({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-syncopate",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -31,6 +42,8 @@ export default function RootLayout({
       <body
         className={cn(
           inter.variable,
+          syncopate.variable,
+          spaceGrotesk.variable,
           "font-sans antialiased bg-bg-primary text-text-primary overflow-x-hidden"
         )}
       >

@@ -1,6 +1,5 @@
 import { getLanguage } from "@/lib/api";
-import Link from "next/link";
-import { Globe, ArrowLeft, Info, CheckCircle } from "lucide-react";
+import { Globe, CheckCircle } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, LucideIcon, Users, Target, Zap, Layers } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users, Target, Zap, Layers } from "lucide-react";
 
 interface PokemonItem {
     name: string;

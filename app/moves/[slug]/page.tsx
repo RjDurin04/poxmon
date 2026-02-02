@@ -1,23 +1,13 @@
 import { getMoveDetail } from "@/lib/api";
-import Link from "next/link";
 import {
     Zap,
     Swords,
-    Target,
     Activity,
-    Gamepad2,
-    Info,
-    ArrowLeft,
-    Crosshair,
     Droplets,
     Sparkles,
-    ShieldAlert,
-    Dices,
     Skull,
-    TrendingUp,
     Disc,
     History,
-    Cpu,
     Database,
     Hash,
     Binary,
@@ -66,7 +56,7 @@ export default async function MoveDetailPage({ params }: PageProps) {
 
     const theme = TYPE_THEMES[move.type.name] || { color: "text-accent", border: "border-accent/20", bg: "bg-accent/10", accent: "bg-accent" };
     const shortEffect = move.effect_entries.find(e => e.language.name === "en")?.short_effect || "No operational summary available.";
-    const latestFlavor = move.flavor_text_entries.find(f => f.language.name === "en")?.flavor_text || shortEffect;
+
 
     // Unique history
     const history = move.flavor_text_entries

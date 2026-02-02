@@ -1,21 +1,18 @@
 import { getTypeDetail } from "@/lib/api";
 import Link from "next/link";
 import {
-    ArrowLeft,
     Swords,
     Shield,
     Activity,
     BrainCircuit,
-    GitCommit,
     ArrowRight,
     Users,
     Target,
-    History,
-    ShieldAlert
+    History
 } from "lucide-react";
 import { GenericPokemonCarousel } from "@/components/GenericPokemonCarousel";
 import { BackButton } from "@/components/BackButton";
-import { cn } from "@/lib/utils";
+
 
 interface PageProps {
     params: Promise<{ slug: string }>;

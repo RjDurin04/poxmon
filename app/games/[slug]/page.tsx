@@ -8,11 +8,9 @@ import {
     Layers,
     History,
     ChevronRight,
-    Cpu,
     ArrowUpRight,
     Search,
     Dna,
-    Star,
     Sparkles,
     BrainCircuit
 } from "lucide-react";

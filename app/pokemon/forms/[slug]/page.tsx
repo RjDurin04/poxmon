@@ -1,5 +1,6 @@
 import { getPokemonForm } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { Layers, ArrowLeft, Zap, Info } from "lucide-react";
 
 interface PageProps {
@@ -47,7 +48,13 @@ export default async function PokemonFormDetailPage({ params }: PageProps) {
                         {form.sprites.front_default && (
                             <div className="w-48 h-48 bg-bg-secondary rounded-[40px] border border-border flex items-center justify-center p-4 relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <img src={form.sprites.front_default} alt={form.name} className="w-32 h-32 object-contain relative z-10 group-hover:scale-110 transition-transform" />
+                                <Image
+                                    src={form.sprites.front_default}
+                                    alt={form.name}
+                                    width={128}
+                                    height={128}
+                                    className="object-contain relative z-10 group-hover:scale-110 transition-transform"
+                                />
                             </div>
                         )}
                     </div>

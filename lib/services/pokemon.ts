@@ -1,8 +1,6 @@
-import { apiFetch, apiFetchUrl } from "@/lib/api/client";
-import { EvolutionChain, EvolutionTrigger } from "@/lib/types/evolution";
+import { apiFetch } from "@/lib/api/client";
 import { PokemonDetail, PokemonSpecies } from "@/lib/types/pokemon";
-import { AbilityDetail, TypeDetail } from "@/lib/types/moves";
-import { Characteristic, EggGroup, GrowthRate, Nature, PokemonColor, PokemonHabitat, PokemonShape } from "@/lib/types/world";
+import { EggGroup, GrowthRate, Nature, PokemonColor, PokemonHabitat, PokemonShape } from "@/lib/types/world";
 import { APIResourceList } from "@/lib/types/common";
 
 export async function getPokemon(id: string | number): Promise<PokemonDetail> {

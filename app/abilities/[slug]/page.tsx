@@ -1,22 +1,18 @@
 import { getAbilityDetail } from "@/lib/api";
-import Link from "next/link";
 import {
     Cpu,
-    BookOpen,
     History,
     Users,
     Zap,
     GitBranch,
-    ArrowLeft,
     Database,
     Hash,
     Binary,
-    Code,
     Activity
 } from "lucide-react";
 import { GenericPokemonCarousel } from "@/components/GenericPokemonCarousel";
 import { BackButton } from "@/components/BackButton";
-import { cn } from "@/lib/utils";
+
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -249,11 +245,4 @@ export default async function AbilityDetailPage({ params }: PageProps) {
 }
 
 // Helper components not strictly needed if we inline styles, but keeping the file clean
-function MetaItem({ label, value }: { label: string, value: string }) {
-    return (
-        <div className="flex items-center justify-between py-2 border-b border-border/30 last:border-0 pb-3 last:pb-0">
-            <span className="text-[10px] font-black text-text-muted uppercase tracking-tight">{label}</span>
-            <span className="text-xs font-black text-text-primary capitalize">{value}</span>
-        </div>
-    );
-}
+

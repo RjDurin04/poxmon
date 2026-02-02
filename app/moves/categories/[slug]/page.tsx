@@ -1,6 +1,6 @@
 import { getMoveCategory } from "@/lib/api";
 import Link from "next/link";
-import { Layers, ArrowLeft, Target, Disc } from "lucide-react";
+import { Layers, ArrowLeft, Disc } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;

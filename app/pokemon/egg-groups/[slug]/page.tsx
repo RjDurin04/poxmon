@@ -1,6 +1,7 @@
 import { getEggGroup } from "@/lib/api";
 import Link from "next/link";
-import { Egg, ArrowLeft, Users } from "lucide-react";
+import { Egg } from "lucide-react";
+import Image from "next/image";
 
 import { BackButton } from "@/components/BackButton";
 
@@ -72,15 +73,15 @@ export default async function EggGroupDetailPage({ params }: PageProps) {
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
                                         <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden">
-                                            <img
-                                                src={spriteUrl}
-                                                alt={species.name}
-                                                className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
-                                            />
+                                            <div className="relative w-20 h-20 group-hover:scale-110 transition-transform duration-500">
+                                                <Image
+                                                    src={spriteUrl}
+                                                    alt={species.name}
+                                                    fill
+                                                    className="object-contain drop-shadow-lg"
+                                                    sizes="80px"
+                                                />
+                                            </div>
                                         </div>
                                         <span className="text-[10px] font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors text-center truncate w-full">
                                             {species.name.replace(/-/g, " ")}

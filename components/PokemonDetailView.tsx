@@ -16,34 +16,29 @@ import {
     Star,
     Baby,
     Volume2,
-    MapPin,
     Palette,
     Shapes,
-    TrendingUp,
     TreeDeciduous,
     Egg,
-    Package,
     Dna,
     ChevronRight,
-    ChevronLeft,
-    ChevronDown,
     Images,
     Target,
     Activity,
     Info,
-    ArrowLeft,
-    Box,
-    Zap,
-    Scan,
-    Fingerprint,
     History,
-    Gamepad2,
-    Globe,
-    Book,
-    Trees,
-    Layers,
-    Hash,
     FileText,
+    ChevronLeft,
+    Hash,
+    Layers,
+    Trees,
+    Fingerprint,
+    Scan,
+    Zap,
+    MapPin,
+    Package,
+    Book,
+    Gamepad2
 } from "lucide-react";
 import React, { useState, useRef, useMemo, type ComponentType } from "react";
 
@@ -122,26 +117,7 @@ function SectionHeader({ title, icon: Icon, delay = 0 }: { title: string, icon: 
     );
 }
 
-/**
- * COMPONENT: InfoBlock
- * A reusable technical info block for the fluid layout.
- */
-function InfoBlock({ label, children, className = "", delay = 0 }: { label: string, children: React.ReactNode, className?: string, delay?: number }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay }}
-            className={`flex flex-col gap-2 ${className}`}
-        >
-            <span className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">{label}</span>
-            <div className="text-text-primary">
-                {children}
-            </div>
-        </motion.div>
-    );
-}
+
 
 function AudioPlayer({ cries }: { cries: { latest: string | null; legacy: string | null } }) {
     const [isPlaying, setIsPlaying] = useState<string | null>(null);
@@ -205,14 +181,13 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
     const genus = useMemo(() => species.genera.find((g) => g.language.name === "en")?.genus || "Species Unknown", [species]);
     const japaneseName = useMemo(() => species.names.find((n) => n.language.name === "ja-Hrkt")?.name, [species]);
 
-    const [hasMounted, setHasMounted] = useState(false);
+
     const [cols, setCols] = useState(2);
     const [locCols, setLocCols] = useState(1);
     const [movePage, setMovePage] = useState(1);
     const [locationPage, setLocationPage] = useState(1);
 
     React.useEffect(() => {
-        setHasMounted(true);
         const updateLayout = () => {
             const width = window.innerWidth;
 
@@ -832,15 +807,15 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                                 />
 
                                 <div className="relative z-20 flex flex-col items-center gap-6">
-                                    <div className="relative w-full aspect-square flex items-center justify-center p-2">
-                                        <img
+                                    <div className="relative w-full h-full p-2 group-hover/spr:scale-110 transition-transform duration-500">
+                                        <Image
                                             src={s.url!}
                                             alt={s.label}
-                                            className="w-full h-full object-contain filter drop-shadow-2xl group-hover/spr:scale-125 transition-transform duration-700 relative z-30"
+                                            fill
+                                            className={`object-contain ${s.isShiny ? "brightness-110 contrast-125 saturate-125" : ""}`}
+                                            unoptimized
                                         />
-
-                                        {/* Shiny Indicator Overlays Removed as per user request */}
-                                    </div>
+                                    </div>      {/* Shiny Indicator Overlays Removed as per user request */}
 
                                     <div className="flex flex-col items-center gap-1.5 w-full">
                                         <div className="h-px w-8 bg-white/10 group-hover/spr:w-full transition-all duration-700" />
@@ -1377,14 +1352,16 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                                         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-8 pb-8 border-b border-white/5">
                                             <div className="flex items-center gap-6">
                                                 <div className="w-20 h-20 rounded-2xl bg-accent/5 flex items-center justify-center border border-accent/10 group-hover/payload:bg-accent/10 group-hover/payload:border-accent/30 transition-all duration-500 overflow-hidden shrink-0">
-                                                    <img
-                                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.item.name}.png`}
-                                                        alt={item.item.name}
-                                                        className="w-12 h-12 object-contain filter drop-shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]"
-                                                        onError={(e) => {
-                                                            (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                        }}
-                                                    />
+                                                    <div className="relative w-12 h-12">
+                                                        <Image
+                                                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.item.name}.png`}
+                                                            alt={item.item.name}
+                                                            fill
+                                                            className="object-contain filter drop-shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]"
+                                                            sizes="48px"
+                                                            unoptimized
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-3 text-accent mb-1">

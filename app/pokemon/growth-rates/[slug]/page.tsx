@@ -1,6 +1,7 @@
 import { getGrowthRate } from "@/lib/api";
 import Link from "next/link";
-import { TrendingUp, ArrowLeft, Activity } from "lucide-react";
+import Image from "next/image";
+import { TrendingUp, Activity } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 
@@ -108,16 +109,16 @@ export default async function GrowthRateDetailPage({ params }: PageProps) {
                                         href={`/pokemon/${species.name}`}
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
-                                        <div className="w-16 h-16 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden">
-                                            <img
-                                                src={spriteUrl}
-                                                alt={species.name}
-                                                className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
-                                            />
+                                        <div className="w-16 h-16 bg-bg-tertiary rounded-xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors relative">
+                                            <div className="relative w-12 h-12">
+                                                <Image
+                                                    src={spriteUrl}
+                                                    alt={species.name}
+                                                    fill
+                                                    className="object-contain group-hover:scale-110 transition-transform duration-500"
+                                                    sizes="48px"
+                                                />
+                                            </div>
                                         </div>
                                         <span className="text-[10px] font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors text-center truncate w-full">
                                             {species.name.replace(/-/g, " ")}
@@ -125,10 +126,10 @@ export default async function GrowthRateDetailPage({ params }: PageProps) {
                                     </Link>
                                 );
                             })}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        </div >
+                    </div >
+                </div >
+            </div >
+        </div >
     );
 }

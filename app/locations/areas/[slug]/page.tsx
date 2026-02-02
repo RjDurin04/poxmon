@@ -1,6 +1,7 @@
 import { getLocationArea } from "@/lib/api";
 import Link from "next/link";
-import { Map, ArrowLeft, Target, Radio } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Radio } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -19,7 +20,7 @@ export default async function LocationAreaDetailPage({ params }: PageProps) {
 
                 <div className="relative max-w-7xl mx-auto">
                     <Link
-                        href={`/locations/${area.location.name}`}
+                        href={`/ locations / ${area.location.name} `}
                         className="inline-flex items-center gap-2 text-accent hover:text-accent-hover transition-colors mb-8 group"
                     >
                         <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
@@ -76,20 +77,20 @@ export default async function LocationAreaDetailPage({ params }: PageProps) {
                                         href={`/pokemon/${enc.pokemon.name}`}
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
-                                        <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden relative">
-                                            <img
-                                                src={spriteUrl}
-                                                alt={enc.pokemon.name}
-                                                className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
-                                            />
+                                        <div className="flex flex-col items-center">
+                                            <div className="relative w-16 h-16 mb-4">
+                                                <Image
+                                                    src={spriteUrl}
+                                                    alt={enc.pokemon.name}
+                                                    fill
+                                                    className="object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500"
+                                                    sizes="64px"
+                                                />
+                                            </div>
+                                            <span className="text-sm font-black text-text-primary capitalize group-hover:text-accent transition-colors">
+                                                {enc.pokemon.name.replace(/-/g, " ")}
+                                            </span>
                                         </div>
-                                        <span className="text-[10px] font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors text-center truncate w-full">
-                                            {enc.pokemon.name.replace(/-/g, " ")}
-                                        </span>
                                     </Link>
                                 );
                             })}

@@ -1,5 +1,5 @@
 import { apiFetch } from "@/lib/api/client";
-import { NamedAPIResource, APIResourceList, Name } from "@/lib/types/common";
+import { NamedAPIResource, Name } from "@/lib/types/common";
 import { PokemonType } from "@/lib/types/pokemon";
 import {
     Characteristic, Nature

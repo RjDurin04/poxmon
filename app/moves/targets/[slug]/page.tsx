@@ -1,6 +1,6 @@
 import { getMoveTarget } from "@/lib/api";
 import Link from "next/link";
-import { Move, ArrowLeft, Target, Gamepad2, Disc } from "lucide-react";
+import { ArrowLeft, Target, Disc } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;

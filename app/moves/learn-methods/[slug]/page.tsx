@@ -1,6 +1,6 @@
 import { getMoveLearnMethod } from "@/lib/api";
 import Link from "next/link";
-import { BookOpen, ArrowLeft, Target, Gamepad2 } from "lucide-react";
+import { BookOpen, ArrowLeft, Gamepad2 } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;

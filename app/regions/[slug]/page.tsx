@@ -1,24 +1,16 @@
 import { getRegionDetail } from "@/lib/api";
 import Link from "next/link";
 import {
-    Map as MapIcon,
-    ArrowLeft,
-    Navigation,
-    Gamepad2,
-    BookOpen,
-    Globe,
-    MapPin,
-    ArrowUpRight,
-    Search,
-    Database,
     Hash,
-    Layers,
-    Binary,
+    Scan,
+    BookOpen,
+    Database,
     ShieldCheck,
-    Globe2,
+    ArrowUpRight,
     Cpu,
     Activity,
-    Scan
+    MapPin,
+    Globe2
 } from "lucide-react";
 import { BackButton } from "@/components/BackButton";
 import { cn } from "@/lib/utils";

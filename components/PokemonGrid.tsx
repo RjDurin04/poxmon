@@ -11,7 +11,6 @@ import {
     Search,
     Database,
     Activity,
-    Zap,
     Crosshair,
     ChevronLeft,
     ChevronRight,

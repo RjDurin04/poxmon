@@ -1,6 +1,6 @@
 import { getNatureDetail } from "@/lib/api";
 import Link from "next/link";
-import { Brain, ArrowLeft, TrendingUp, TrendingDown, Soup } from "lucide-react";
+import { Brain, TrendingUp, TrendingDown, Soup } from "lucide-react";
 import { BackButton } from "@/components/BackButton";
 
 interface PageProps {

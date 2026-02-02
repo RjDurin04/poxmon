@@ -333,11 +333,4 @@ export default async function ItemDetailPage({ params }: PageProps) {
     );
 }
 
-function MetaItem({ label, value }: { label: string, value: string }) {
-    return (
-        <div className="flex items-center justify-between py-1 border-b border-border/30 last:border-0 pb-3 last:pb-0">
-            <span className="text-[10px] font-black text-text-muted uppercase tracking-tight">{label}</span>
-            <span className="text-xs font-black text-text-primary capitalize">{value}</span>
-        </div>
-    );
-}
+

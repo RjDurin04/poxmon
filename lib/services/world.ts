@@ -1,7 +1,6 @@
 import { apiFetch } from "@/lib/api/client";
 import { LocationDetail, LocationAreaDetail, RegionDetail, GenerationDetail, PokedexDetail, VersionDetail, VersionGroupDetail, PalParkAreaDetail } from "@/lib/types/world";
 import { Machine } from "@/lib/types/world"; // Re-exporting Machine from generic world types if needed, or specific file
-import { APIResourceList } from "@/lib/types/common";
 
 // Location
 export async function getLocation(id: string | number): Promise<LocationDetail> {

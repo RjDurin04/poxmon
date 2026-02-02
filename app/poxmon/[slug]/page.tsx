@@ -83,14 +83,12 @@ export default async function PokedexDetailPage({ params }: PageProps) {
                             <div className="relative flex-1">
                                 <div className="w-20 h-20 rounded-2xl bg-bg-tertiary border border-border flex items-center justify-center p-2 mb-6 group-hover:bg-accent/10 transition-colors relative overflow-hidden">
                                     <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <img
+                                    <Image
                                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${entry.pokemon_species.url.split("/").filter(Boolean).pop()}.png`}
                                         alt={entry.pokemon_species.name}
-                                        className="w-16 h-16 object-contain relative z-10 group-hover:scale-110 transition-transform duration-500"
-                                        loading="lazy"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entry.pokemon_species.url.split("/").filter(Boolean).pop()}.png`;
-                                        }}
+                                        fill
+                                        className="object-contain relative z-10 group-hover:scale-110 transition-transform duration-500"
+                                        sizes="64px"
                                     />
                                 </div>
                                 <div className="flex items-center gap-2 mb-2">

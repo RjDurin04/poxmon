@@ -1,6 +1,6 @@
 import { getContestType } from "@/lib/api";
 import Link from "next/link";
-import { Sparkles, ArrowLeft, Cherry } from "lucide-react";
+import { Sparkles, Cherry } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

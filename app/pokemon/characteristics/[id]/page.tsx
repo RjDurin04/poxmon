@@ -1,6 +1,6 @@
 import { getCharacteristic } from "@/lib/api";
 import Link from "next/link";
-import { Info, ArrowLeft, Target, Activity } from "lucide-react";
+import { Info, Target, Activity } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

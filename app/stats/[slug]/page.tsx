@@ -1,6 +1,6 @@
 import { getStat } from "@/lib/api";
 import Link from "next/link";
-import { Zap, ArrowLeft, BarChart3 } from "lucide-react";
+import { Zap, BarChart3 } from "lucide-react";
 import { BackButton } from "@/components/BackButton";
 
 interface PageProps {

@@ -1,4 +1,4 @@
-import { NamedAPIResource, APIResource, Name, Description, VerboseEffect, FlavorText, Effect, MachineVersionDetail, GenerationGameIndex } from "./common";
+import { NamedAPIResource, APIResource, Name, Description, VerboseEffect, Effect, MachineVersionDetail, GenerationGameIndex } from "./common";
 
 // ======================
 // Move Types

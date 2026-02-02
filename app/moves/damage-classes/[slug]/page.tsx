@@ -1,6 +1,6 @@
 import { getMoveDamageClass } from "@/lib/api";
 import Link from "next/link";
-import { Zap, ArrowLeft, Target, ShieldCheck } from "lucide-react";
+import { Zap, ArrowLeft, ShieldCheck } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;

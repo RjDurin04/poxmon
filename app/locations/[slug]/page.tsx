@@ -1,25 +1,9 @@
 import { getLocationDetail, getLocationArea } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import {
-    MapPin,
-    ArrowLeft,
-    Compass,
-    Navigation,
-    History,
-    MoveUpRight,
-    Search,
-    Map as MapIcon,
-    Layers,
-    Globe,
-    Binary,
-    Database,
-    Hash,
-    Scan,
-    BarChart3,
-    Activity,
-    Radar
+    Navigation, History, Search, Map as MapIcon, Layers, Globe, Hash, Scan, BarChart3, Radar
 } from "lucide-react";
-import { GenericPokemonCarousel } from "@/components/GenericPokemonCarousel";
 import { BackButton } from "@/components/BackButton";
 import { cn } from "@/lib/utils";
 
@@ -201,6 +185,7 @@ export default async function LocationDetailPage({ params, searchParams }: PageP
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {mainArea.pokemon_encounters.map((enc) => {
                                             const pokemonId = enc.pokemon.url.split("/").filter(Boolean).pop();
+                                            const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
                                             return (
                                                 <Link
                                                     key={enc.pokemon.name}
@@ -208,12 +193,13 @@ export default async function LocationDetailPage({ params, searchParams }: PageP
                                                     className="group flex items-center justify-between p-5 bg-bg-tertiary/20 border border-border/40 rounded-3xl hover:border-accent/40 hover:bg-bg-tertiary/40 transition-all duration-300"
                                                 >
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-16 h-16 rounded-2xl bg-bg-secondary border border-border flex items-center justify-center p-2 group-hover:scale-110 transition-transform">
-                                                            <img
-                                                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}
+                                                        <div className="w-12 h-12 bg-bg-tertiary rounded-xl flex items-center justify-center shrink-0 border border-border group-hover:border-accent/40 relative">
+                                                            <Image
+                                                                src={spriteUrl}
                                                                 alt={enc.pokemon.name}
-                                                                className="w-12 h-12 object-contain grayscale group-hover:grayscale-0 transition-all"
-                                                                loading="lazy"
+                                                                fill
+                                                                className="object-contain p-1"
+                                                                sizes="48px"
                                                             />
                                                         </div>
                                                         <div>

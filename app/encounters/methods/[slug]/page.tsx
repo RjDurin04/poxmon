@@ -1,6 +1,5 @@
 import { getEncounterMethod } from "@/lib/api";
-import Link from "next/link";
-import { Crosshair, ArrowLeft, Gamepad2 } from "lucide-react";
+import { Crosshair, Gamepad2 } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

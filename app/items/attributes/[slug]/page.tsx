@@ -1,6 +1,7 @@
 import { getItemAttribute } from "@/lib/api";
 import Link from "next/link";
-import { Tag, ArrowLeft, Archive } from "lucide-react";
+import Image from "next/image";
+import { Tag, ArrowLeft } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -76,14 +77,13 @@ export default async function ItemAttributeDetailPage({ params }: PageProps) {
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
                                         <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden relative">
-                                            <img
+                                            <Image
                                                 src={spriteUrl}
                                                 alt={item.name}
-                                                className="w-10 h-10 object-contain group-hover:scale-125 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
+                                                fill
+                                                className="object-contain p-2 group-hover:scale-125 transition-transform duration-500"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                unoptimized
                                             />
                                         </div>
                                         <span className="text-[10px] font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors text-center truncate w-full">

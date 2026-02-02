@@ -2,8 +2,9 @@
 
 import { EvolutionChain, EvolutionChainNode, EvolutionDetail } from "@/lib/api";
 import Link from "next/link";
-import { Sparkles, Moon, Sun, Heart, Gem, MapPin, Users, FlipVertical, Activity, ChevronRight, Zap } from "lucide-react";
+import { Sparkles, Moon, Sun, Heart, Gem, MapPin, Users, FlipVertical, ChevronRight, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface EvolutionChainDisplayProps {
     chain: EvolutionChain;
@@ -90,13 +91,12 @@ function EvolutionNode({ node, isBranch = false }: { node: EvolutionChainNode; i
                         animate={{ y: [0, -8, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     >
-                        <img
+                        <Image
                             src={spriteUrl}
                             alt={node.species.name}
-                            className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover/node:scale-110 transition-transform duration-700"
-                            onError={(e) => {
-                                (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                            }}
+                            fill
+                            className="object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover/node:scale-110 transition-transform duration-700"
+                            sizes="(max-width: 768px) 192px, 256px"
                         />
                     </motion.div>
 

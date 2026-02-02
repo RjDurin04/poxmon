@@ -1,6 +1,6 @@
 import { getPokeathlonStat } from "@/lib/api";
 import Link from "next/link";
-import { Zap, ArrowLeft, Brain, TrendingUp, TrendingDown } from "lucide-react";
+import { Zap, TrendingUp, TrendingDown } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

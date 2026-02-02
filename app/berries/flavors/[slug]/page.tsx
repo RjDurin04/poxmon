@@ -1,5 +1,6 @@
 import { getBerryFlavor } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { Soup, ArrowLeft, Zap } from "lucide-react";
 
 interface PageProps {
@@ -91,14 +92,13 @@ export default async function BerryFlavorDetailPage({ params }: PageProps) {
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
                                         <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden relative">
-                                            <img
+                                            <Image
                                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.berry.name}-berry.png`}
                                                 alt={item.berry.name}
-                                                className="w-12 h-12 object-contain group-hover:scale-125 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
+                                                fill
+                                                className="object-contain p-2 group-hover:scale-125 transition-transform duration-500"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                unoptimized
                                             />
                                             <div className="absolute top-1 right-1 px-1.5 py-0.5 bg-accent/20 text-accent text-[8px] font-black rounded-lg border border-accent/30">
                                                 +{item.potency}

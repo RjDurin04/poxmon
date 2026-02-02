@@ -1,5 +1,6 @@
 import { getBerryFirmness } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { Carrot, ArrowLeft } from "lucide-react";
 
 interface PageProps {
@@ -67,7 +68,6 @@ export default async function BerryFirmnessDetailPage({ params }: PageProps) {
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                             {firmness.berries.map((berry) => {
-                                const id = berry.url.split("/").filter(Boolean).pop();
                                 const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${berry.name}-berry.png`;
 
                                 return (
@@ -76,15 +76,14 @@ export default async function BerryFirmnessDetailPage({ params }: PageProps) {
                                         href={`/berries/${berry.name}`}
                                         className="group p-4 bg-bg-secondary border border-border rounded-[24px] hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/10 flex flex-col items-center"
                                     >
-                                        <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden">
-                                            <img
+                                        <div className="w-20 h-20 bg-bg-tertiary rounded-2xl flex items-center justify-center mb-3 group-hover:bg-accent/10 transition-colors overflow-hidden relative">
+                                            <Image
                                                 src={spriteUrl}
                                                 alt={berry.name}
-                                                className="w-12 h-12 object-contain group-hover:scale-125 transition-transform duration-500"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
-                                                }}
+                                                fill
+                                                className="object-contain p-2 group-hover:scale-125 transition-transform duration-500"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                unoptimized
                                             />
                                         </div>
                                         <span className="text-[10px] font-black text-text-primary capitalize tracking-tight group-hover:text-accent transition-colors text-center truncate w-full">

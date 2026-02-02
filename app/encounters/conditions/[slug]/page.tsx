@@ -1,6 +1,6 @@
 import { getEncounterCondition } from "@/lib/api";
 import Link from "next/link";
-import { Cloud, ArrowLeft, Dices } from "lucide-react";
+import { Cloud, Dices } from "lucide-react";
 
 import { BackButton } from "@/components/BackButton";
 

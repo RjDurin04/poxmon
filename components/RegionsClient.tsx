@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Globe2, Layers, Search, Database, Navigation, ChevronRight, Map } from "lucide-react";
+import { Globe2, Layers, ChevronRight, Map } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface RegionSummary {
