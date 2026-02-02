@@ -1,7 +1,7 @@
 export const POKEAPI_BASE = "https://pokeapi.co/api/v2";
 
 // --- Rate Limiting ---
-const MAX_CONCURRENT = 4;
+const MAX_CONCURRENT = 20;
 let activeRequests = 0;
 const queue: (() => void)[] = [];
 

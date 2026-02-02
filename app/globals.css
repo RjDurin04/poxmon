@@ -15,6 +15,7 @@
   --color-error: #ef4444;
   --color-success: #22c55e;
 
+  --font-sans: var(--font-space-grotesk);
   --font-display: var(--font-syncopate);
   --font-body: var(--font-space-grotesk);
 
@@ -39,6 +40,7 @@
     from {
       top: -128px;
     }
+
     to {
       top: 100%;
     }
@@ -49,6 +51,7 @@
   body {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
+    font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   }
 }
 
