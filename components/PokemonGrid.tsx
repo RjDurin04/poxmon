@@ -151,6 +151,8 @@ export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
                             <Search className="h-5 w-5 text-accent" />
                         </div>
                         <input
+                            id="pokemon-search"
+                            name="pokemon-search"
                             type="text"
                             value={query}
                             onChange={(e) => {

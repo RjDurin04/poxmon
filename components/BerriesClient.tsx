@@ -129,6 +129,8 @@ export function BerriesClient({ initialBerries, totalCount }: BerriesClientProps
                             <div className="relative group max-w-md">
                                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-emerald-500 transition-colors" />
                                 <input
+                                    id="berry-search"
+                                    name="berry-search"
                                     type="text"
                                     placeholder="Search botanical names..."
                                     value={searchQuery}

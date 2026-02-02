@@ -129,6 +129,8 @@ export function ItemsClient({ initialItems, totalCount }: ItemsClientProps) {
                             <div className="relative group max-w-md">
                                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-accent transition-colors" />
                                 <input
+                                    id="item-search"
+                                    name="item-search"
                                     type="text"
                                     placeholder="Search inventory..."
                                     value={searchQuery}

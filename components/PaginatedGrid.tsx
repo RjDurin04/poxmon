@@ -95,6 +95,8 @@ function PaginatedGridContent({
 
                     <div className="relative max-w-md">
                         <input
+                            id="grid-search"
+                            name="grid-search"
                             type="text"
                             value={query}
                             onChange={(e) => {

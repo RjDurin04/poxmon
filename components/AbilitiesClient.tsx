@@ -128,6 +128,8 @@ export function AbilitiesClient({ initialAbilities, totalCount }: AbilitiesClien
                             <div className="relative group max-w-md">
                                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-accent transition-colors" />
                                 <input
+                                    id="ability-search"
+                                    name="ability-search"
                                     type="text"
                                     placeholder="Analyze patterns..."
                                     value={searchQuery}

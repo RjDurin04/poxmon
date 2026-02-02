@@ -52,6 +52,8 @@ export function VoidInterface({ initialPokemon }: VoidInterfaceProps) {
 
                     <div className="relative group">
                         <input
+                            id="void-search"
+                            name="void-search"
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}

@@ -149,6 +149,8 @@ export function TypesClient({ initialTypes, totalCount }: TypesClientProps) {
                             <div className="relative group max-w-md">
                                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-focus-within:text-accent transition-colors" />
                                 <input
+                                    id="type-search"
+                                    name="type-search"
                                     type="text"
                                     placeholder="Filter categories..."
                                     value={searchQuery}
