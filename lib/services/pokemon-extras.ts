@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api/client";
-import { NamedAPIResource, APIResourceList } from "@/lib/types/common";
+import { NamedAPIResource, APIResourceList, Name } from "@/lib/types/common";
+import { PokemonType } from "@/lib/types/pokemon";
 import {
     Characteristic, Nature
 } from "@/lib/types/world";
@@ -11,8 +12,23 @@ import {
 export interface PokemonForm {
     id: number;
     name: string;
+    order: number;
+    form_order: number;
+    is_default: boolean;
+    is_battle_only: boolean;
+    is_mega: boolean;
+    form_name: string;
     pokemon: NamedAPIResource;
-    // ... add more if needed
+    types: PokemonType[];
+    sprites: {
+        front_default: string | null;
+        front_shiny: string | null;
+        back_default: string | null;
+        back_shiny: string | null;
+    };
+    version_group: NamedAPIResource;
+    names: Name[];
+    form_names: Name[];
 }
 
 export interface Gender {
@@ -22,6 +38,7 @@ export interface Gender {
         rate: number;
         pokemon_species: NamedAPIResource;
     }[];
+    names: Name[];
 }
 
 export interface PokeathlonStat {
@@ -31,6 +48,7 @@ export interface PokeathlonStat {
         increase: { max_change: number; nature: NamedAPIResource }[];
         decrease: { max_change: number; nature: NamedAPIResource }[];
     };
+    names: Name[];
 }
 
 export interface Stat {
@@ -40,6 +58,7 @@ export interface Stat {
     is_battle_only: boolean;
     affecting_moves: { move: NamedAPIResource; change: number }[];
     affecting_natures: { nature: NamedAPIResource; increase: boolean }[];
+    names: Name[];
 }
 
 export async function getPokemonForm(id: string | number): Promise<PokemonForm> {
