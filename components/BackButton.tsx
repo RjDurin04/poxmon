@@ -8,7 +8,7 @@ interface BackButtonProps {
     className?: string;
     label?: string;
     fallbackPath?: string;
-    variant?: "default" | "floating";
+    variant?: "default" | "floating" | "footer";
 }
 
 export function BackButton({ className, label = "Back", fallbackPath = "/", variant = "default" }: BackButtonProps) {
@@ -34,6 +34,20 @@ export function BackButton({ className, label = "Back", fallbackPath = "/", vari
                 title={label}
             >
                 <ArrowLeft className="w-5 h-5 text-text-primary group-hover:text-accent transition-colors pointer-events-none" />
+            </button>
+        );
+    }
+
+    if (variant === "footer") {
+        return (
+            <button
+                onClick={handleBack}
+                className={cn("group flex flex-col items-center gap-8 cursor-pointer", className)}
+            >
+                <div className="w-20 h-20 rounded-[2.5rem] bg-bg-secondary border border-white/5 group-hover:border-accent group-hover:bg-accent/20 flex items-center justify-center transition-all duration-700">
+                    <ArrowLeft className="w-8 h-8 text-text-muted group-hover:text-accent transition-colors" />
+                </div>
+                <span className="text-xs font-black uppercase tracking-[1em] text-text-muted group-hover:text-accent transition-all pl-[1em]">{label}</span>
             </button>
         );
     }

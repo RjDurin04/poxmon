@@ -1,15 +1,16 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
 import {
     Menu, X, LayoutGrid, Map, MapPin,
     Sword, Zap, Shapes, Briefcase,
-    Grape, Gamepad2, Database
+    Grape, Gamepad2
 } from "lucide-react";
+import Image from "next/image";
 
 const NAV_ITEMS = [
     { href: "/", label: "Pokemon", icon: LayoutGrid },
@@ -34,7 +35,16 @@ export function Navigation() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    useEffect(() => setIsOpen(false), [pathname]);
+    // Close menu on route change - this is a valid side effect for syncing with routing
+    // We need to sync menu state with external navigation events
+    const prevPathname = useRef(pathname);
+    useEffect(() => {
+        if (prevPathname.current !== pathname) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setIsOpen(false);
+            prevPathname.current = pathname;
+        }
+    }, [pathname]);
 
     useEffect(() => {
         document.body.style.overflow = isOpen ? "hidden" : "unset";
@@ -60,12 +70,18 @@ export function Navigation() {
                         <Link href="/" className="flex items-center gap-3 group relative z-[110]">
                             <motion.div
                                 whileHover={{ scale: 1.1 }}
-                                className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20"
+                                className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 overflow-hidden relative"
                             >
-                                <Database className="w-6 h-6 text-white" />
+                                <Image
+                                    src="/logo.png"
+                                    alt="Poxmon Logo"
+                                    fill
+                                    className="object-contain p-1"
+                                    sizes="40px"
+                                />
                             </motion.div>
                             <span className="font-bold text-xl text-white uppercase tracking-tighter">
-                                Poké<span className="text-accent">Dex</span>
+                                Pox<span className="text-accent">mon</span>
                             </span>
                         </Link>
 

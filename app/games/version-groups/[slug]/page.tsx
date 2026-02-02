@@ -53,7 +53,7 @@ export default async function VersionGroupDetailPage({ params }: PageProps) {
                             </div>
 
                             <p className="text-text-secondary text-xl leading-relaxed max-w-2xl font-medium italic opacity-80">
-                                This grouping defines the core game mechanics, Pokedexes, and regional settings shared across its constituent game versions.
+                                This grouping defines the core game mechanics, Poxmon, and regional settings shared across its constituent game versions.
                             </p>
                         </div>
 
@@ -65,7 +65,7 @@ export default async function VersionGroupDetailPage({ params }: PageProps) {
                                         <Database className="w-5 h-5 text-accent" />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black text-text-muted uppercase tracking-widest">Pokedexes</span>
+                                        <span className="text-[9px] font-black text-text-muted uppercase tracking-widest">Poxmon</span>
                                         <span className="text-lg font-black text-text-primary leading-none">{group.pokedexes.length} Databases</span>
                                     </div>
                                 </div>
@@ -161,8 +161,8 @@ export default async function VersionGroupDetailPage({ params }: PageProps) {
                                 </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="p-8 bg-bg-primary border border-border/50 rounded-[32px] hover:border-accent/30 transition-all group/stat">
-                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-widest block mb-2 group-hover/stat:text-accent transition-colors">Pokedex Access</span>
-                                        <div className="text-3xl font-black text-text-primary tracking-tighter">{group.pokedexes.length} Pokedex Databases</div>
+                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-widest block mb-2 group-hover/stat:text-accent transition-colors">Poxmon Access</span>
+                                        <div className="text-3xl font-black text-text-primary tracking-tighter">{group.pokedexes.length} Poxmon Databases</div>
                                     </div>
                                     <div className="p-8 bg-bg-primary border border-border/50 rounded-[32px] hover:border-accent/30 transition-all group/stat">
                                         <span className="text-[10px] font-black text-text-muted uppercase tracking-widest block mb-2 group-hover/stat:text-accent transition-colors">Movement & Evolution</span>

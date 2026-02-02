@@ -9,9 +9,9 @@ async function PokedexList() {
     return (
         <PaginatedGrid
             items={pokedexList.results}
-            title="Pokedexes"
-            description={`${pokedexList.count} regional pokedexes indexed`}
-            basePath="/pokedex"
+            title="Poxmon"
+            description={`${pokedexList.count} regional poxmon indexed`}
+            basePath="/poxmon"
             rowsLocked={10}
             useModal={false}
         />

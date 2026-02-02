@@ -321,7 +321,7 @@ export default async function LocationDetailPage({ params, searchParams }: PageP
 }
 
 // Icon helper
-function Binoculars(props: any) {
+function Binoculars(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
             {...props}

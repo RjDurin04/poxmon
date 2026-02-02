@@ -270,12 +270,7 @@ export default async function TypeDetailPage({ params }: PageProps) {
 
                 {/* Termination Footer */}
                 <div className="border-t border-white/5 pt-32 pb-12 flex flex-col items-center text-center">
-                    <Link href="/types" className="group flex flex-col items-center gap-8">
-                        <div className="w-20 h-20 rounded-[2.5rem] bg-bg-secondary border border-white/5 group-hover:border-accent group-hover:bg-accent/10 flex items-center justify-center transition-all duration-700">
-                            <ArrowLeft className="w-8 h-8 text-text-muted group-hover:text-accent transition-colors" />
-                        </div>
-                        <span className="text-xs font-black uppercase tracking-[1em] text-text-muted group-hover:text-accent transition-all pl-[1em]">Return to Matrix</span>
-                    </Link>
+                    <BackButton variant="footer" label="Return to Matrix" fallbackPath="/types" />
                 </div>
 
             </main>

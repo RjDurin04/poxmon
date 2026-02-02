@@ -1,4 +1,6 @@
-import { getPokemonDetail, getPokemonSpecies, getEvolutionChain, getPokemonEncounters } from "@/lib/api";
+import { getPokemonDetail, getPokemonSpecies } from "@/lib/services/pokemon";
+import { getEvolutionChainFromUrl } from "@/lib/services/evolution";
+import { getPokemonEncounters } from "@/lib/services/pokemon-extras";
 import { PokemonDetailView } from "@/components/PokemonDetailView";
 
 interface PageProps {
@@ -12,7 +14,7 @@ export default async function PokemonPage({ params }: PageProps) {
     const species = await getPokemonSpecies(pokemon.species.name);
 
     const [evolution, encounters] = await Promise.all([
-        getEvolutionChain(species.evolution_chain.url),
+        getEvolutionChainFromUrl(species.evolution_chain.url),
         getPokemonEncounters(slug).catch(() => []),
     ]);
 

@@ -32,7 +32,14 @@ interface PageProps {
     params: Promise<{ slug: string }>;
 }
 
-const TYPE_THEMES: Record<string, { color: string, border: string, bg: string, accent: string }> = {
+interface TypeTheme {
+    color: string;
+    border: string;
+    bg: string;
+    accent: string;
+}
+
+const TYPE_THEMES: Record<string, TypeTheme> = {
     normal: { color: "text-zinc-400", border: "border-zinc-500/20", bg: "bg-zinc-500/10", accent: "bg-zinc-500" },
     fire: { color: "text-orange-500", border: "border-orange-500/20", bg: "bg-orange-500/10", accent: "bg-orange-500" },
     water: { color: "text-blue-500", border: "border-blue-500/20", bg: "bg-blue-500/10", accent: "bg-blue-500" },
@@ -159,7 +166,8 @@ export default async function MoveDetailPage({ params }: PageProps) {
                             </div>
 
                             <div className="p-6 rounded-3xl bg-black/40 border border-white/5 font-mono text-xs sm:text-sm text-text-secondary/80 leading-relaxed">
-                                <span className="text-emerald-500/50 mb-2 block">// Full Instruction Processing Hook</span>
+                                {/* Full Instruction Processing Hook */}
+                                <span className="text-emerald-500/50 mb-2 block">{'// Full Instruction Processing Hook'}</span>
                                 {move.effect_entries.find(e => e.language.name === "en")?.effect.split('\n').map((line, i) => (
                                     <p key={i} className="mb-4 last:mb-0">{line}</p>
                                 ))}
@@ -301,11 +309,16 @@ export default async function MoveDetailPage({ params }: PageProps) {
                 </section>
 
             </main>
+
+            {/* Termination Footer */}
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-32 border-t border-white/5 relative z-10 flex flex-col items-center text-center">
+                <BackButton variant="footer" label="Back to Registry" fallbackPath="/moves" />
+            </div>
         </div>
     );
 }
 
-function MetricBox({ label, value, theme }: { label: string, value: string | number, theme: any }) {
+function MetricBox({ label, value, theme }: { label: string, value: string | number, theme: TypeTheme }) {
     return (
         <div className="flex flex-col items-center text-center min-w-[80px]">
             <span className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-3">{label}</span>

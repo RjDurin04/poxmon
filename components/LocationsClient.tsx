@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import Link from "next/link";
 import {
     Globe,
@@ -8,9 +10,6 @@ import {
     ChevronRight,
     ArrowUpRight,
     Navigation,
-    Compass,
-    Target,
-    Layers,
     Activity,
     Search
 } from "lucide-react";
@@ -38,14 +37,6 @@ export function LocationsClient({ regionList, initialLocations }: LocationsClien
             transition: {
                 staggerChildren: 0.05
             }
-        }
-    };
-
-    const cardVariants = {
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5, ease: "easeOut" }
         }
     };
 
@@ -192,7 +183,7 @@ export function LocationsClient({ regionList, initialLocations }: LocationsClien
     );
 }
 
-function TechnicalMetric({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: any, color?: string }) {
+function TechnicalMetric({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: React.ComponentType<{ className?: string }>, color?: string }) {
     return (
         <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-bg-secondary border border-border flex items-center justify-center">

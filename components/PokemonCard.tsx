@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PokemonDetail } from "@/lib/api";
 import { getTypeColor, cn } from "@/lib/utils";
+import { PokemonTypeEffect } from "./TypeEffects";
+import { ArrowUpRight, Hexagon, Crosshair, Sparkles } from "lucide-react";
 
 interface PokemonCardProps {
     pokemon: PokemonDetail;
@@ -29,72 +31,96 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
         <motion.div
             initial="initial"
             whileHover="hover"
+            whileTap="hover"
+            whileFocus="hover"
             variants={{
                 initial: { y: 0 },
-                hover: { y: -8 }
+                hover: { y: -10 }
             }}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             onMouseMove={handleMouseMove}
+            className="group"
         >
             <Link
                 href={`/pokemon/${pokemon.name}`}
-                className="relative block h-full group"
+                className="relative block h-full w-full"
             >
-                {/* Card Background & Border */}
+                {/* Tech Card Container */}
                 <div
                     ref={cardRef}
                     className={cn(
-                        "relative h-full bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden transition-all duration-500",
-                        "group-hover:border-white/20 group-hover:shadow-[0_0_40px_rgba(0,0,0,0.3)]"
+                        "relative h-full bg-bg-secondary/40 backdrop-blur-sm rounded-[24px] border overflow-hidden transition-all duration-500",
+                        "hover:shadow-[0_0_40px_-10px_var(--type-color-alpha)]"
                     )}
+                    style={{
+                        borderColor: `${typeColor}30`, // 30 = Hex opacity ~20%
+                        "--type-color": typeColor,
+                        "--type-color-alpha": `${typeColor}40`,
+                    } as React.CSSProperties}
                 >
-                    {/* Dynamic Type Glow */}
+                    {/* Dynamic Ambient Background */}
                     <div
-                        className="absolute top-0 right-0 w-32 h-32 blur-[80px] opacity-20 transition-opacity duration-500 group-hover:opacity-40"
-                        style={{ backgroundColor: typeColor }}
-                    />
-                    <div
-                        className="absolute bottom-0 left-0 w-32 h-32 blur-[80px] opacity-10 transition-opacity duration-500 group-hover:opacity-30"
-                        style={{ backgroundColor: typeColor }}
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{
+                            background: `radial-gradient(circle at center, ${typeColor}15, transparent 70%)`
+                        }}
                     />
 
-                    <div className="p-5 flex flex-col h-full items-center">
-                        {/* Header: ID Badge */}
-                        <div className="w-full flex justify-between items-start mb-4">
-                            <span className="text-[10px] font-bold tracking-widest text-white/30 uppercase">
-                                Gen 01
-                            </span>
-                            <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-white/50">
-                                #{pokemon.id.toString().padStart(3, "0")}
-                            </span>
-                        </div>
+                    {/* Visual Decor - Tech Grid */}
+                    <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+                        style={{
+                            backgroundImage: `linear-gradient(${typeColor}30 1px, transparent 1px), linear-gradient(90deg, ${typeColor}30 1px, transparent 1px)`,
+                            backgroundSize: '20px 20px'
+                        }}
+                    />
 
-                        {/* Image Section */}
-                        <div className="relative w-full aspect-square mb-6 flex items-center justify-center">
-                            {/* Decorative Background Element */}
+                    {/* Content Layout */}
+                    <div className="relative z-10 p-5 flex flex-col h-full min-h-[320px]">
+
+                        {/* Header: ID & Status */}
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="flex flex-col">
+                                <span className="text-[9px] font-mono font-black tracking-widest uppercase mb-1" style={{ color: typeColor }}>
+                                    Specimen
+                                </span>
+                                <span className="text-xs font-mono text-text-muted/60">
+                                    #{pokemon.id.toString().padStart(4, "0")}
+                                </span>
+                            </div>
+
                             <motion.div
                                 variants={{
-                                    initial: { scale: 0.8, opacity: 0.3, rotate: 0 },
-                                    hover: { scale: 1.1, opacity: 0.6, rotate: 90 }
+                                    initial: { opacity: 0, scale: 0.8, backgroundColor: `${typeColor}00` },
+                                    hover: { opacity: 1, scale: 1, backgroundColor: typeColor }
                                 }}
-                                className="absolute w-3/4 h-3/4 border-2 border-dashed border-white/5 rounded-full"
+                                className="w-8 h-8 rounded-full text-white flex items-center justify-center transition-colors duration-300"
+                            >
+                                <ArrowUpRight className="w-4 h-4" />
+                            </motion.div>
+                        </div>
+
+                        {/* Centered Image Showcase */}
+                        <div className="relative flex-1 flex items-center justify-center my-4">
+
+                            {/* Center Halo (Static Base Glow) - z-0 background layer */}
+                            <div
+                                className="absolute w-32 h-32 blur-[40px] opacity-20 group-hover:opacity-50 transition-opacity duration-500 rounded-full z-0"
+                                style={{ backgroundColor: typeColor }}
                             />
 
-                            {/* Holographic Platform */}
-                            <div className="absolute bottom-4 w-1/2 h-2 bg-white/5 rounded-[100%] blur-md transition-all duration-500 group-hover:scale-150 group-hover:opacity-40" />
-
-                            <div className="relative z-10 w-full h-full p-4">
+                            {/* Pokemon Image Container */}
+                            <div className="relative w-40 h-40">
                                 {pokemon.sprites.other["official-artwork"].front_default ? (
                                     <motion.div
                                         variants={{
-                                            initial: { y: 0, scale: 1, filter: "drop-shadow(0 0 0px transparent)" },
+                                            initial: { scale: 1, y: 0, filter: "grayscale(20%) contrast(100%)" },
                                             hover: {
-                                                y: -20,
-                                                scale: 1.15,
-                                                filter: `drop-shadow(0 20px 30px ${typeColor}66)`
+                                                scale: 1.35,
+                                                y: -10,
+                                                filter: "grayscale(0%) contrast(110%) drop-shadow(0 10px 20px rgba(0,0,0,0.3))"
                                             }
                                         }}
-                                        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                                        transition={{ duration: 0.4, type: "spring", stiffness: 200, damping: 15 }}
                                         className="w-full h-full relative"
                                     >
                                         <Image
@@ -102,50 +128,68 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
                                             alt={pokemon.name}
                                             fill
                                             className="object-contain"
-                                            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16vw"
+                                            sizes="(max-width: 640px) 50vw, 33vw"
                                             priority={pokemon.id <= 10}
                                         />
                                     </motion.div>
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-white/20">
-                                        No Image
+                                    <div className="w-full h-full flex items-center justify-center text-text-muted/20">
+                                        <Hexagon className="w-12 h-12" />
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        {/* Title & Info */}
-                        <div className="text-center w-full mt-auto">
-                            <h3 className="text-lg font-bold text-white mb-3 capitalize tracking-tight transition-colors duration-300 group-hover:text-white">
-                                {pokemon.name}
-                            </h3>
-
-                            <div className="flex flex-wrap justify-center gap-1.5">
-                                {pokemon.types.map((t) => {
-                                    const tColor = getTypeColor(t.type.name);
-                                    return (
-                                        <span
-                                            key={t.type.name}
-                                            className="px-2.5 py-1 text-[10px] font-bold rounded-lg border uppercase tracking-wider transition-all duration-300"
-                                            style={{
-                                                backgroundColor: `${tColor}15`,
-                                                borderColor: `${tColor}40`,
-                                                color: tColor
-                                            }}
-                                        >
-                                            {t.type.name}
-                                        </span>
-                                    );
-                                })}
+                        {/* Footer Info */}
+                        <div className="mt-auto pt-4 border-t" style={{ borderColor: `${typeColor}20` }}>
+                            <div className="flex items-center justify-between items-end">
+                                <div>
+                                    <h3 className="text-xl font-black text-text-primary capitalize tracking-tight mb-2 group-hover:text-[var(--type-color)] transition-colors duration-300">
+                                        {pokemon.name}
+                                    </h3>
+                                    <div className="flex items-center gap-1.5">
+                                        {pokemon.types.map((typeObj) => {
+                                            const currentType = typeObj.type.name.toLowerCase().trim();
+                                            const currentTypeColor = getTypeColor(currentType);
+                                            return (
+                                                <span
+                                                    key={currentType}
+                                                    data-type={currentType}
+                                                    className="px-2 py-0.5 rounded-[4px] border text-[9px] font-bold uppercase tracking-wider transition-all duration-300"
+                                                    style={{
+                                                        backgroundColor: `${currentTypeColor}15`,
+                                                        borderColor: `${currentTypeColor}30`,
+                                                        color: currentTypeColor
+                                                    }}
+                                                >
+                                                    {currentType}
+                                                </span>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-end gap-1">
+                                    <Sparkles className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: typeColor }} />
+                                    <Crosshair className="w-4 h-4 text-text-muted/30 group-hover:opacity-0 transition-opacity duration-300" />
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Scanline Effect Overlay (Subtle) */}
-                    <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px]" />
+                    {/* Elemental Particle Effects - z-20 layer, centered around the image area */}
+                    <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
+                        <div className="relative w-56 h-56 overflow-visible">
+                            <PokemonTypeEffect types={pokemon.types} />
+                        </div>
+                    </div>
 
-                    {/* Border Shine Effect */}
-                    <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(400px_circle_at_var(--mouse-x,50%)_var(--mouse-y,50%),rgba(255,255,255,0.06),transparent_40%)]" />
+                    {/* Spotlight overlay effect */}
+                    <div
+                        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{
+                            background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), ${typeColor}10, transparent 40%)`
+                        }}
+                    />
                 </div>
             </Link>
         </motion.div>

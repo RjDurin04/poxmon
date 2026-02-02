@@ -239,6 +239,11 @@ export default async function AbilityDetailPage({ params }: PageProps) {
                 </section>
 
             </main>
+
+            {/* Termination Footer */}
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-32 border-t border-white/5 relative z-10 flex flex-col items-center text-center">
+                <BackButton variant="footer" label="Back to Registry" fallbackPath="/abilities" />
+            </div>
         </div>
     );
 }

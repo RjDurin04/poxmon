@@ -163,7 +163,7 @@ export default async function RegionDetailPage({ params, searchParams }: PagePro
 
                     {/* 2. System Modules & Versions (Right Column) */}
                     <div className="lg:col-span-4 space-y-12">
-                        {/* Biological Directories (Pokedexes) */}
+                        {/* Biological Directories (Poxmon) */}
                         <div className="p-8 rounded-[3rem] bg-bg-secondary/40 backdrop-blur-xl border border-border/50 relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
                                 <BookOpen className="w-32 h-32 rotate-12" />
@@ -180,7 +180,7 @@ export default async function RegionDetailPage({ params, searchParams }: PagePro
                                 {region.pokedexes.map((dex) => (
                                     <Link
                                         key={dex.name}
-                                        href={`/pokedex/${dex.name}`}
+                                        href={`/poxmon/${dex.name}`}
                                         className="p-6 bg-bg-tertiary/40 border border-border/30 rounded-3xl hover:border-accent/40 transition-all group/dex block relative overflow-hidden"
                                     >
                                         <div className="flex items-center justify-between mb-4">

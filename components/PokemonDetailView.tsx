@@ -405,6 +405,7 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
                                     src={pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default || ""}
                                     alt={pokemon.name}
                                     fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
                                     className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] sm:drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)] lg:drop-shadow-[0_80px_120px_rgba(0,0,0,0.8)] group-hover:scale-105 lg:group-hover:-translate-y-8 transition-all duration-1000 relative z-10"
                                     priority
                                 />
@@ -1467,12 +1468,7 @@ export function PokemonDetailView({ pokemon, species, evolution, encounters }: P
 
             {/* Termination Footer */}
             <div className="max-w-7xl mx-auto px-4 md:px-8 py-32 border-t border-white/5 relative z-10 flex flex-col items-center text-center">
-                <Link href="/" className="group flex flex-col items-center gap-8">
-                    <div className="w-20 h-20 rounded-[2.5rem] bg-bg-secondary border border-white/5 group-hover:border-accent group-hover:bg-accent/20 flex items-center justify-center transition-all duration-700">
-                        <ArrowLeft className="w-8 h-8 text-text-muted group-hover:text-accent transition-colors" />
-                    </div>
-                    <span className="text-xs font-black uppercase tracking-[1em] text-text-muted group-hover:text-accent transition-all pl-[1em]">Back to List</span>
-                </Link>
+                <BackButton variant="footer" label="Back to List" fallbackPath="/pokedex" />
             </div>
         </div >
     );

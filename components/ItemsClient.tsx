@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
     Package,
     Search,
-    Database,
     ChevronLeft,
     ChevronRight,
     ArrowUpRight,
@@ -45,6 +44,12 @@ export function ItemsClient({ initialItems, totalCount }: ItemsClientProps) {
         return () => window.removeEventListener("resize", updateCols);
     }, []);
 
+    // Reset page when search changes
+    const handleSearchChange = useCallback((value: string) => {
+        setSearchQuery(value);
+        setCurrentPage(1);
+    }, []);
+
     const ROWS = 5;
     const itemsPerPage = cols * ROWS;
 
@@ -59,10 +64,6 @@ export function ItemsClient({ initialItems, totalCount }: ItemsClientProps) {
         const start = (currentPage - 1) * itemsPerPage;
         return filteredItems.slice(start, start + itemsPerPage);
     }, [filteredItems, currentPage, itemsPerPage]);
-
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [searchQuery]);
 
     const containerVariants = {
         visible: {
@@ -131,7 +132,7 @@ export function ItemsClient({ initialItems, totalCount }: ItemsClientProps) {
                                     type="text"
                                     placeholder="Search inventory..."
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={(e) => handleSearchChange(e.target.value)}
                                     className="w-full bg-bg-secondary/50 border border-border h-16 pl-14 pr-8 rounded-3xl outline-none focus:border-accent/50 focus:bg-bg-tertiary transition-all font-black uppercase tracking-widest text-xs"
                                 />
                             </div>
@@ -229,7 +230,7 @@ export function ItemsClient({ initialItems, totalCount }: ItemsClientProps) {
     );
 }
 
-function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: any, color?: string }) {
+function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }: { label: string, value: string | number, icon: React.ComponentType<{ className?: string }>, color?: string }) {
     return (
         <div className="bg-bg-secondary/40 border border-border px-8 py-5 rounded-3xl backdrop-blur-md flex-1 lg:flex-none">
             <div className="flex items-center gap-3 mb-1.5">
@@ -241,7 +242,7 @@ function DashboardStat({ label, value, icon: Icon, color = "text-text-primary" }
     );
 }
 
-function PaginationButton({ onClick, disabled, icon: Icon }: { onClick: () => void, disabled: boolean, icon: any }) {
+function PaginationButton({ onClick, disabled, icon: Icon }: { onClick: () => void, disabled: boolean, icon: React.ComponentType<{ className?: string }> }) {
     return (
         <button
             onClick={onClick}

@@ -35,7 +35,7 @@ const GEN_THEMES: Record<string, { color: string, border: string, bg: string, te
     "generation-ix": { color: "bg-purple-600", border: "border-purple-500/30", bg: "bg-purple-500/10", text: "text-purple-500", accent: "rgba(147, 51, 234, 0.4)" },
 };
 
-function TelemetryCard({ label, value, icon: Icon, color }: { label: string, value: number, icon: any, color: string }) {
+function TelemetryCard({ label, value, icon: Icon, color }: { label: string, value: number, icon: React.ComponentType<{ className?: string }>, color: string }) {
     return (
         <div className="bg-bg-secondary/60 backdrop-blur-lg border border-border/50 p-6 rounded-[28px] group hover:border-accent/30 transition-all flex flex-col justify-between h-32">
             <div className="flex items-center justify-between">
@@ -50,7 +50,7 @@ function TelemetryCard({ label, value, icon: Icon, color }: { label: string, val
     );
 }
 
-function DataSection({ title, label, icon: Icon, count, color, children }: { title: string, label: string, icon: any, count: number, color: string, children: React.ReactNode }) {
+function DataSection({ title, label, icon: Icon, count, color, children }: { title: string, label: string, icon: React.ComponentType<{ className?: string }>, count: number, color: string, children: React.ReactNode }) {
     return (
         <div className="bg-bg-secondary/40 backdrop-blur-xl rounded-[40px] p-8 border border-border/50 flex flex-col h-[560px] group hover:border-accent/20 transition-all shadow-xl">
             <div className="flex items-start justify-between mb-10">

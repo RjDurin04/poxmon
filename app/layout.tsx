@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Pokédex | Pokemon Database",
+  title: "Poxmon | Pokemon Database",
   description: "A modern, comprehensive Pokemon encyclopedia.",
 };
 
