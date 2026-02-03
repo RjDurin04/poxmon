@@ -6,7 +6,7 @@ export default async function HomePage() {
   let pokemonDetails: PokemonDetail[] = [];
 
   try {
-    const list = await getPokemonList(30, 0);
+    const list = await getPokemonList(2000, 0);
     pokemonDetails = await Promise.all(
       list.results.map((p) => getPokemonDetail(p.name))
     );
