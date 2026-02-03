@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PokemonCard } from "./PokemonCard";
 import type { PokemonDetail } from "@/lib/api";
+import { NamedAPIResource } from "@/lib/types/common";
 import { cn } from "@/lib/utils";
 import {
     Search,
@@ -19,14 +20,27 @@ import {
 import Image from "next/image";
 
 interface PokemonGridProps {
-    initialPokemon: PokemonDetail[];
+    allPokemon: NamedAPIResource[];
+    initialDetails: PokemonDetail[];
 }
 
-export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
+export function PokemonGrid({ allPokemon, initialDetails }: PokemonGridProps) {
     const [query, setQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(30); // Default to desktop 6*5
+    const [itemsPerPage, setItemsPerPage] = useState(30);
+    const [loadedDetails, setLoadedDetails] = useState<Record<string, PokemonDetail>>(() => {
+        const initialMap: Record<string, PokemonDetail> = {};
+        initialDetails.forEach(p => {
+            initialMap[p.name] = p;
+        });
+        return initialMap;
+    });
     const gridTopRef = useRef<HTMLDivElement>(null);
+
+    // Function to add a detail to the map (used by cards)
+    const addDetail = (detail: PokemonDetail) => {
+        setLoadedDetails(prev => ({ ...prev, [detail.name]: detail }));
+    };
 
     // Calculate items per page for exactly 5 rows based on responsive columns
     useEffect(() => {
@@ -48,10 +62,10 @@ export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
     }, []);
 
     const filtered = useMemo(() =>
-        initialPokemon.filter((p) =>
+        allPokemon.filter((p) =>
             p.name.toLowerCase().includes(query.toLowerCase())
         ),
-        [initialPokemon, query]
+        [allPokemon, query]
     );
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage);
@@ -197,7 +211,12 @@ export function PokemonGrid({ initialPokemon }: PokemonGridProps) {
                 >
                     <AnimatePresence mode="popLayout">
                         {paginatedItems.map((p) => (
-                            <PokemonCard key={p.id} pokemon={p} />
+                            <PokemonCard
+                                key={p.name}
+                                pokemonStub={p}
+                                initialDetail={loadedDetails[p.name]}
+                                onLoaded={addDetail}
+                            />
                         ))}
                     </AnimatePresence>
                 </motion.div>

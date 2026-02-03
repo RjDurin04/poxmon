@@ -1,21 +1,43 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { PokemonDetail } from "@/lib/api";
+import { getPokemonDetail } from "@/lib/api";
+import { NamedAPIResource } from "@/lib/types/common";
 import { getTypeColor, cn } from "@/lib/utils";
 import { PokemonTypeEffect } from "./TypeEffects";
-import { ArrowUpRight, Hexagon, Crosshair, Sparkles } from "lucide-react";
+import { ArrowUpRight, Hexagon, Crosshair, Sparkles, Loader2 } from "lucide-react";
 
 interface PokemonCardProps {
-    pokemon: PokemonDetail;
+    pokemonStub: NamedAPIResource;
+    initialDetail?: PokemonDetail;
+    onLoaded?: (detail: PokemonDetail) => void;
 }
 
-export function PokemonCard({ pokemon }: PokemonCardProps) {
-    const mainType = pokemon.types[0].type.name;
-    const typeColor = getTypeColor(mainType);
+export function PokemonCard({ pokemonStub, initialDetail, onLoaded }: PokemonCardProps) {
+    const [detail, setDetail] = useState<PokemonDetail | undefined>(initialDetail);
+    const [loading, setLoading] = useState(!initialDetail);
+
+    useEffect(() => {
+        if (!detail && pokemonStub.name) {
+            const fetchDetail = async () => {
+                try {
+                    const data = await getPokemonDetail(pokemonStub.name);
+                    setDetail(data);
+                    onLoaded?.(data);
+                } catch (error) {
+                    console.error(`Failed to fetch detail for ${pokemonStub.name}:`, error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchDetail();
+        }
+    }, [detail, pokemonStub.name, onLoaded]);
+
     const cardRef = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -26,6 +48,25 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
         cardRef.current.style.setProperty("--mouse-x", `${x}px`);
         cardRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
+
+    if (loading || !detail) {
+        return (
+            <div className="relative h-full min-h-[320px] bg-bg-secondary/20 backdrop-blur-sm rounded-[24px] border border-border/30 flex flex-col items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+                    style={{
+                        backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
+                <Loader2 className="w-8 h-8 text-accent animate-spin mb-4" />
+                <span className="text-[10px] font-mono text-text-muted uppercase tracking-[0.3em]">{pokemonStub.name}</span>
+            </div>
+        );
+    }
+
+    const pokemon = detail;
+    const mainType = pokemon.types[0].type.name;
+    const typeColor = getTypeColor(mainType);
 
     return (
         <motion.div
